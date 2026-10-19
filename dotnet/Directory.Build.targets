@@ -1,0 +1,27 @@
+<Project>
+
+  <!--
+    Projects that run inside AutoCAD set <UsesAutoCAD>true</UsesAutoCAD> (evaluated here, after the project file).
+    AutoCAD reference assemblies come from the installed product: the AutoCAD.NET NuGet packages only ship
+    lib/net10.0, which net8.0 projects cannot consume. Override with -p:AcadVersion=2025, -p:AcadDir=... or MTA_ACAD_DIR.
+  -->
+  <PropertyGroup Condition="'$(UsesAutoCAD)' == 'true'">
+    <AcadVersion Condition="'$(AcadVersion)' == ''">2026</AcadVersion>
+    <AcadDir Condition="'$(AcadDir)' == '' and '$(MTA_ACAD_DIR)' != ''">$(MTA_ACAD_DIR)</AcadDir>
+    <AcadDir Condition="'$(AcadDir)' == ''">$(ProgramW6432)\Autodesk\AutoCAD $(AcadVersion)</AcadDir>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(UsesAutoCAD)' == 'true'">
+    <!-- AutoCAD runs on the Windows Desktop runtime; referencing it resolves the System.Drawing /
+         Microsoft.VisualBasic version conflicts (MSB3277) raised by AcCoreMgd/AcDbMgd. -->
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App" />
+    <Reference Include="AcCoreMgd"><HintPath>$(AcadDir)\AcCoreMgd.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="AcDbMgd"><HintPath>$(AcadDir)\AcDbMgd.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <Target Name="MtaCheckAcadDir" BeforeTargets="ResolveAssemblyReferences" Condition="'$(UsesAutoCAD)' == 'true'">
+    <Error Condition="!Exists('$(AcadDir)\AcCoreMgd.dll')"
+           Text="AutoCAD $(AcadVersion) not found at '$(AcadDir)'. Install it or pass -p:AcadDir=... / set MTA_ACAD_DIR." />
+  </Target>
+
+</Project>

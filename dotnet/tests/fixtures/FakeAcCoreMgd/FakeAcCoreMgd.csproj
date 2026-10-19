@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Stand-in for AutoCAD's AcCoreMgd (see ../README.md). Never shipped, never loaded by AutoCAD. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>AcCoreMgd</AssemblyName>
+    <AssemblyVersion>25.0.0.0</AssemblyVersion>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+</Project>

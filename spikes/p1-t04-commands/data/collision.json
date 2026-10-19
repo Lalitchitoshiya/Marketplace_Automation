@@ -1,0 +1,5 @@
+{
+ "exit": 0,
+ "console": "menu utilities loaded.\r\nCommand:\r\nCommand:\r\n\r\nCommand:\r\nCommand: (setvar \"TRUSTEDPATHS\" \"D:/Marketplace_Automation/spikes/p1-t04-commands/out/CollisionPlugin\")\r\n\"D:/Marketplace_Automation/spikes/p1-t04-commands/out/CollisionPlugin\"\r\n\r\nCommand: (princ (strcat \"\\nBEFORE=\" (vl-princ-to-string (getcname \"LINE\"))))\r\n\r\nBEFORE=_LINE\"\\nBEFORE=_LINE\"\r\n\r\nCommand: NETLOAD\r\nAssembly file name: D:\\Marketplace_Automation\\spikes\\p1-t04-commands\\out\\CollisionPlugin\\CollisionPlugin.dll\r\n\r\nCommand: (princ (strcat \"\\nAFTER=\" (vl-princ-to-string (getcname \"LINE\"))))\r\n\r\nAFTER=_LINE\"\\nAFTER=_LINE\"\r\n\r\nCommand: LINE\r\n\r\nSpecify first point: 0,0\r\n\r\nSpecify next point or [Undo]: 10,10\r\n\r\nSpecify next point or [Undo]: (command)\r\n\r\nCommand: nil\r\n\r\n",
+ "apis": null
+}

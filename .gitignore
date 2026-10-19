@@ -1,0 +1,29 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+
+# .NET
+bin/
+obj/
+*.user
+.vs/
+
+# MTA runtime data (runs, artifacts, dumps, reports)
+.mta/
+mta-data/
+
+# Spike outputs (findings are kept in specs/adr/)
+spikes/*/out/
+spikes/*/runs/
+
+# OS / editors
+Thumbs.db
+.DS_Store
+.idea/

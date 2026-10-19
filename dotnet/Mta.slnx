@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MtaInspect/MtaInspect.csproj" />
+  </Folder>
+  <Folder Name="/synthetic/">
+    <Project Path="synthetic/Sd01Clean/Sd01Clean.csproj" />
+  </Folder>
+  <Folder Name="/tests/fixtures/">
+    <Project Path="tests/fixtures/FakeAcCoreMgd/FakeAcCoreMgd.csproj" />
+    <Project Path="tests/fixtures/FixtureNet48/FixtureNet48.csproj" />
+    <Project Path="tests/fixtures/FixturePlugin/FixturePlugin.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MtaInspect.Tests/MtaInspect.Tests.csproj" />
+  </Folder>
+</Solution>

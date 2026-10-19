@@ -1,0 +1,46 @@
+# MTA CI. GitHub Actions syntax; port to Azure DevOps if Autodesk hosts the repo there.
+# Jobs that need AutoCAD run only on a self-hosted runner labelled `autocad-2026`
+# (enable by setting repository variable HAS_AUTOCAD_RUNNER=true).
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  python:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv python install 3.12
+      - run: uv sync
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy
+      # mta-inspect and its fixture assemblies are used by the static-analysis tests (step 9).
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - run: dotnet build dotnet/src/MtaInspect -c Release
+      - run: dotnet build dotnet/tests/fixtures/FixturePlugin -c Release
+      - run: dotnet build dotnet/tests/fixtures/FixtureNet48 -c Release
+      - run: uv run pytest
+
+  dotnet:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      # Only projects that do not need AutoCAD.
+      - run: dotnet build dotnet/src/MtaInspect -c Release
+      - run: dotnet test dotnet/tests/MtaInspect.Tests -c Release
+
+  dotnet-autocad:
+    if: vars.HAS_AUTOCAD_RUNNER == 'true'
+    runs-on: [self-hosted, windows, autocad-2026]
+    steps:
+      - uses: actions/checkout@v4
+      - run: dotnet build dotnet/Mta.slnx -c Release

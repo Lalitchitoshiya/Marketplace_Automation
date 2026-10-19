@@ -1,0 +1,52 @@
+# Host-independent static analysis rules (check-catalog.md BIN-004, BIN-006, BIN-007).
+# Patterns match mta-inspect output: member references "Namespace.Type::Member", P/Invoke dll + entry.
+# These are inventories for the reviewer (WARN / INFO), never blocking on their own.
+
+risky_apis:                         # BIN-007, prefix match on member references
+  - {pattern: "System.Diagnostics.Process::Start", why: starts other programs}
+  - {pattern: "System.Management.Automation.PowerShell::", why: runs PowerShell}
+  - {pattern: "Microsoft.Win32.Registry::LocalMachine", why: accesses HKEY_LOCAL_MACHINE}
+  - {pattern: "Microsoft.Win32.RegistryKey::SetValue", why: writes the registry}
+  - {pattern: "Microsoft.Win32.RegistryKey::DeleteSubKey", why: deletes registry keys}
+  - {pattern: "System.Net.Sockets.Socket::", why: uses raw sockets}
+  - {pattern: "System.Net.Sockets.TcpClient::", why: opens TCP connections}
+  - {pattern: "System.Net.Sockets.UdpClient::", why: sends UDP traffic}
+  - {pattern: "System.Reflection.Emit.", why: generates code at runtime}
+  - {pattern: "System.Reflection.Assembly::Load", why: loads assemblies at runtime}
+  - {pattern: "System.Runtime.InteropServices.Marshal::GetDelegateForFunctionPointer", why: calls native code by pointer}
+  - {pattern: "System.IO.File::Delete", why: deletes files}
+  - {pattern: "System.IO.Directory::Delete", why: deletes folders}
+
+risky_pinvokes:                     # BIN-007, case-insensitive; entry "*" = any entry of that DLL
+  - {dll: amsi.dll, entry: "*", why: touches the antimalware scan interface}
+  - {dll: kernel32.dll, entry: VirtualProtect, why: changes memory protection}
+  - {dll: kernel32.dll, entry: VirtualAlloc, why: allocates executable memory}
+  - {dll: kernel32.dll, entry: WriteProcessMemory, why: writes another process's memory}
+  - {dll: kernel32.dll, entry: CreateRemoteThread, why: injects threads into other processes}
+  - {dll: ntdll.dll, entry: "*", why: calls undocumented native APIs}
+  - {dll: user32.dll, entry: SetWindowsHookEx, why: installs global hooks}
+
+ignored_url_hosts:                  # BIN-006: XML namespaces and schema ids, not network endpoints
+  - schemas.microsoft.com
+  - schemas.openxmlformats.org
+  - www.w3.org
+  - purl.org
+  - ns.adobe.com
+  - json-schema.org
+
+framework_assemblies:               # BIN-004: provided by .NET / Windows Desktop (fnmatch, case-insensitive)
+  - mscorlib
+  - netstandard
+  - System
+  - "System.*"
+  - "Microsoft.Win32.*"
+  - Microsoft.CSharp
+  - Microsoft.VisualBasic
+  - "Microsoft.VisualBasic.*"
+  - WindowsBase
+  - PresentationCore
+  - PresentationFramework
+  - "PresentationFramework.*"
+  - "UIAutomation*"
+  - ReachFramework
+  - Accessibility

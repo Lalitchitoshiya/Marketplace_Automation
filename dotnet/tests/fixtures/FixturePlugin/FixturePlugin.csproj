@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Inspection fixture (see ../README.md). Never run. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FakeAcCoreMgd\FakeAcCoreMgd.csproj" />
+  </ItemGroup>
+
+</Project>

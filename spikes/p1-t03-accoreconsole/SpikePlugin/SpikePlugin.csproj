@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AcadDir>C:\Program Files\Autodesk\AutoCAD 2026</AcadDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="AcCoreMgd"><HintPath>$(AcadDir)\AcCoreMgd.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="AcDbMgd"><HintPath>$(AcadDir)\AcDbMgd.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+</Project>

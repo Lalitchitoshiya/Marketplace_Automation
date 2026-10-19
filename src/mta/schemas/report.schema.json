@@ -1,0 +1,941 @@
+{
+  "$defs": {
+    "AppType": {
+      "enum": [
+        "desktop",
+        "web",
+        "mcp"
+      ],
+      "title": "AppType",
+      "type": "string"
+    },
+    "ArtifactEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/ArtifactKind"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sha256",
+        "kind",
+        "path"
+      ],
+      "title": "ArtifactEntry",
+      "type": "object"
+    },
+    "ArtifactKind": {
+      "enum": [
+        "package",
+        "file",
+        "log",
+        "screenshot",
+        "video",
+        "dump",
+        "trace",
+        "drawing",
+        "document",
+        "report"
+      ],
+      "title": "ArtifactKind",
+      "type": "string"
+    },
+    "CheckResult": {
+      "additionalProperties": false,
+      "properties": {
+        "check_id": {
+          "pattern": "^[A-Z]{2,4}-\\d{3}$",
+          "title": "Check Id",
+          "type": "string"
+        },
+        "confidence": {
+          "default": 1.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "duration_ms": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duration Ms"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "remediation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Remediation"
+        },
+        "severity": {
+          "$ref": "#/$defs/Severity"
+        },
+        "source": {
+          "$ref": "#/$defs/Source"
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "target": {
+          "$ref": "#/$defs/CheckTarget"
+        }
+      },
+      "required": [
+        "check_id",
+        "target",
+        "status",
+        "severity",
+        "source",
+        "message"
+      ],
+      "title": "CheckResult",
+      "type": "object"
+    },
+    "CheckTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "host_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z][a-z0-9]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host Id"
+        },
+        "host_version": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host Version"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "subject": {
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject"
+      ],
+      "title": "CheckTarget",
+      "type": "object"
+    },
+    "DocumentKind": {
+      "enum": [
+        "user_guide",
+        "quick_start",
+        "release_notes",
+        "install_guide",
+        "listing_description",
+        "other"
+      ],
+      "title": "DocumentKind",
+      "type": "string"
+    },
+    "DocumentRef": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/DocumentKind",
+          "default": "other"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sha256"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "title": "DocumentRef",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "excerpt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Excerpt"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ref"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "Feature": {
+      "additionalProperties": false,
+      "properties": {
+        "commands": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Commands",
+          "type": "array"
+        },
+        "expected": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expected"
+        },
+        "how_to": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "How To"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "sample": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sample"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "Feature",
+      "type": "object"
+    },
+    "Inventory": {
+      "additionalProperties": false,
+      "properties": {
+        "commands": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Commands",
+          "type": "array"
+        },
+        "components": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Components",
+          "type": "array"
+        },
+        "files_written": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Files Written",
+          "type": "array"
+        },
+        "network": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Network",
+          "type": "array"
+        },
+        "ui": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Ui",
+          "type": "array"
+        }
+      },
+      "title": "Inventory",
+      "type": "object"
+    },
+    "Listing": {
+      "additionalProperties": false,
+      "properties": {
+        "app_type": {
+          "$ref": "#/$defs/AppType",
+          "default": "desktop"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "documentation_urls": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Documentation Urls",
+          "type": "array"
+        },
+        "external_domains": {
+          "items": {
+            "type": "string"
+          },
+          "title": "External Domains",
+          "type": "array"
+        },
+        "pricing": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Pricing"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "privacy_policy_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Privacy Policy Url"
+        },
+        "publisher": {
+          "title": "Publisher",
+          "type": "string"
+        },
+        "screenshots": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Screenshots",
+          "type": "array"
+        },
+        "short_description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Short Description"
+        },
+        "support_email": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Support Email"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "publisher"
+      ],
+      "title": "Listing",
+      "type": "object"
+    },
+    "MatrixEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "host_id": {
+          "pattern": "^[a-z][a-z0-9]*$",
+          "title": "Host Id",
+          "type": "string"
+        },
+        "host_version": {
+          "title": "Host Version",
+          "type": "integer"
+        },
+        "summary": {
+          "$ref": "#/$defs/StatusSummary"
+        },
+        "ui_mode": {
+          "$ref": "#/$defs/UiMode"
+        }
+      },
+      "required": [
+        "host_id",
+        "host_version",
+        "ui_mode",
+        "summary"
+      ],
+      "title": "MatrixEntry",
+      "type": "object"
+    },
+    "MtaInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "config_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Config Sha256",
+          "type": "string"
+        },
+        "duration_ms": {
+          "minimum": 0,
+          "title": "Duration Ms",
+          "type": "integer"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "config_sha256",
+        "duration_ms"
+      ],
+      "title": "MtaInfo",
+      "type": "object"
+    },
+    "PackageKind": {
+      "enum": [
+        "msi",
+        "bundle",
+        "zip"
+      ],
+      "title": "PackageKind",
+      "type": "string"
+    },
+    "PackageRef": {
+      "additionalProperties": false,
+      "properties": {
+        "filename": {
+          "title": "Filename",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/PackageKind"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "filename",
+        "sha256",
+        "size_bytes",
+        "kind"
+      ],
+      "title": "PackageRef",
+      "type": "object"
+    },
+    "Pricing": {
+      "enum": [
+        "free",
+        "trial",
+        "paid",
+        "subscription"
+      ],
+      "title": "Pricing",
+      "type": "string"
+    },
+    "ProductDecl": {
+      "additionalProperties": false,
+      "properties": {
+        "host_id": {
+          "pattern": "^[a-z][a-z0-9]*$",
+          "title": "Host Id",
+          "type": "string"
+        },
+        "versions": {
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "title": "Versions",
+          "type": "array"
+        },
+        "verticals": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Verticals",
+          "type": "array"
+        }
+      },
+      "required": [
+        "host_id",
+        "versions"
+      ],
+      "title": "ProductDecl",
+      "type": "object"
+    },
+    "Recommendation": {
+      "enum": [
+        "RECOMMEND_APPROVE",
+        "RECOMMEND_REJECT",
+        "NEEDS_HUMAN"
+      ],
+      "title": "Recommendation",
+      "type": "string"
+    },
+    "ReviewerInputs": {
+      "additionalProperties": false,
+      "properties": {
+        "notes": {
+          "default": "",
+          "title": "Notes",
+          "type": "string"
+        },
+        "scenarios": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Scenarios",
+          "type": "array"
+        }
+      },
+      "title": "ReviewerInputs",
+      "type": "object"
+    },
+    "Severity": {
+      "enum": [
+        "BLOCKER",
+        "MAJOR",
+        "MINOR",
+        "INFO"
+      ],
+      "title": "Severity",
+      "type": "string"
+    },
+    "Source": {
+      "enum": [
+        "static",
+        "dynamic",
+        "monitor",
+        "ai"
+      ],
+      "title": "Source",
+      "type": "string"
+    },
+    "Status": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "WARN",
+        "NEEDS_REVIEW",
+        "SKIPPED",
+        "ERROR"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "StatusSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Error",
+          "type": "integer"
+        },
+        "fail": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Fail",
+          "type": "integer"
+        },
+        "needs_review": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Needs Review",
+          "type": "integer"
+        },
+        "pass": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Pass",
+          "type": "integer"
+        },
+        "skipped": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Skipped",
+          "type": "integer"
+        },
+        "warn": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Warn",
+          "type": "integer"
+        }
+      },
+      "title": "StatusSummary",
+      "type": "object"
+    },
+    "Submission": {
+      "additionalProperties": false,
+      "properties": {
+        "app_id": {
+          "title": "App Id",
+          "type": "string"
+        },
+        "app_version": {
+          "title": "App Version",
+          "type": "string"
+        },
+        "documents": {
+          "items": {
+            "$ref": "#/$defs/DocumentRef"
+          },
+          "title": "Documents",
+          "type": "array"
+        },
+        "features": {
+          "items": {
+            "$ref": "#/$defs/Feature"
+          },
+          "title": "Features",
+          "type": "array"
+        },
+        "listing": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Listing"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "package": {
+          "$ref": "#/$defs/PackageRef"
+        },
+        "previous_submission_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Previous Submission Id"
+        },
+        "products": {
+          "items": {
+            "$ref": "#/$defs/ProductDecl"
+          },
+          "title": "Products",
+          "type": "array"
+        },
+        "received_at": {
+          "format": "date-time",
+          "title": "Received At",
+          "type": "string"
+        },
+        "reviewer_inputs": {
+          "$ref": "#/$defs/ReviewerInputs"
+        },
+        "submission_id": {
+          "title": "Submission Id",
+          "type": "string"
+        },
+        "test_hints": {
+          "$ref": "#/$defs/TestHints"
+        }
+      },
+      "required": [
+        "submission_id",
+        "app_id",
+        "app_version",
+        "package",
+        "received_at"
+      ],
+      "title": "Submission",
+      "type": "object"
+    },
+    "TestHints": {
+      "additionalProperties": false,
+      "properties": {
+        "credentials_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credentials Ref"
+        },
+        "known_limitations": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Known Limitations"
+        },
+        "licence_key_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Licence Key Ref"
+        },
+        "needs_internet": {
+          "default": false,
+          "title": "Needs Internet",
+          "type": "boolean"
+        },
+        "needs_login": {
+          "default": false,
+          "title": "Needs Login",
+          "type": "boolean"
+        },
+        "reviewer_notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewer Notes"
+        }
+      },
+      "title": "TestHints",
+      "type": "object"
+    },
+    "UiMode": {
+      "enum": [
+        "headless",
+        "gui"
+      ],
+      "title": "UiMode",
+      "type": "string"
+    }
+  },
+  "$id": "https://mta.autodesk.internal/schemas/report.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "items": {
+        "$ref": "#/$defs/ArtifactEntry"
+      },
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "inventory": {
+      "$ref": "#/$defs/Inventory"
+    },
+    "job_id": {
+      "title": "Job Id",
+      "type": "string"
+    },
+    "matrix": {
+      "items": {
+        "$ref": "#/$defs/MatrixEntry"
+      },
+      "title": "Matrix",
+      "type": "array"
+    },
+    "mta": {
+      "$ref": "#/$defs/MtaInfo"
+    },
+    "recommendation": {
+      "$ref": "#/$defs/Recommendation"
+    },
+    "recommendation_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Recommendation Reasons",
+      "type": "array"
+    },
+    "report_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Report Version",
+      "type": "integer"
+    },
+    "results": {
+      "items": {
+        "$ref": "#/$defs/CheckResult"
+      },
+      "title": "Results",
+      "type": "array"
+    },
+    "submission": {
+      "$ref": "#/$defs/Submission"
+    }
+  },
+  "required": [
+    "job_id",
+    "submission",
+    "recommendation",
+    "mta"
+  ],
+  "title": "Report",
+  "type": "object"
+}

@@ -1,0 +1,2532 @@
+[
+ {
+  "name": "3DALIGN",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "3DARRAY",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "3DCLIP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "3DCORBIT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "3DDISTANCE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "3DDWF",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "3DEDITBAR",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "3DFACE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "3DFLY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "3DFORBIT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "3DMESH",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "3DMOVE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "3DORBIT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "3DPAN",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "3DPOLY",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "3DPRINT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "3DROTATE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "3DSCALE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "3DSWIVEL",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "3DWALK",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "3DZOOM",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "ABOUT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "ACISIN",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "ACTIVITYINSIGHTSCLOSE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ACTIVITYINSIGHTSOPEN",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ACTIVITYINSIGHTSSTATE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "ACTIVITYINSIGHTSSUPPORT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "ACTRECORD",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ACTSTOP",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ACTUSERINPUT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ACTUSERMESSAGE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ADCENTER",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "AECCCGADIST",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "AECCCGANG",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "AECCCGCDIST",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "AECCCGLIST",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "AECCCGSLIST",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "AIDIMFLIPARROW",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "AIDIMPREC",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "AIDIMSTYLE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "AIDIMTEXTMOVE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "ALIGN",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ALIGNED",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "ALLPLAY",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "ANALYSISCURVATURE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ANALYSISDRAFTANGLE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ANALYSISZEBRA",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ANGULAR",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "ANNOALLVISIBLE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "APPLOAD",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ARC",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "AREA",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "ARRAY",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "ARX",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "ASSISTANTCLOSE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ASSISTANTOPEN",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ATTDEF",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "ATTDISP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "ATTEDIT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "ATTEXT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "ATTIPEDIT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "AUDIT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "AUDITCTL",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "AUTOPUBLISH",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "AUTOSNAP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "BACTION",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "BASE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "BCLOSE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "BCPARAMETER",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "BDETECT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "BEDIT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "BHATCH",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "BLEND",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "BLOCK",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "BOUNDARY",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "BOX",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "BPARAMETER",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "BREAK",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "BSAVE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "BSEARCH",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "BVMODE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "BVSTATE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "CAMERA",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "CAMERADISPLAY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CENTER",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CENTERLINE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "CENTERMARK",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "CETRANSPARENCY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CHAMFER",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "CHAMFEREDGE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CHANGE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "CHECKSTANDARDS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "CHPROP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CIRCLE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "CIRCLERAD",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CLASSICGROUP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CLASSICINSERT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "CLASSICXREF",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CLOSE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CLOSEALL",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CLOSEALLOTHER",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "COLOR",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "COMMANDLINE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "CONE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CONSTRAINTBAR",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "CONSTRAINTNAMEFORMAT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CONSTRAINTSETTINGS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "CONVERT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CONVTONURBS",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CONVTOSOLID",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CONVTOSURFACE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "COORDINATIONMODELATTACH",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "COORDS",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "COPY",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "COPYBASE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "COPYCLIP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "COPYLINK",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CTABLESTYLE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "CUTBASE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CUTCLIP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "CVADD",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "CVHIDE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "CVREBUILD",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "CVREMOVE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "CVSHOW",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "CYLINDER",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DATAEXTRACTION",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "DATALINK",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "DATALINKUPDATE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "DATE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "DBCONNECT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "DDGRIPS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "DEFAULTGIZMO",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "DELAY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "DELCONSTRAINT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "DGNOSNAP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "DIAMETER",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "DIM",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "DIMALIGNED",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMANGULAR",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMARC",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMBASELINE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMBREAK",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "DIMCENTER",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMCONSTRAINT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMCONTINUE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMDIAMETER",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMDISASSOCIATE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMEDIT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMINSPECT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "DIMJOGGED",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMJOGLINE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMLINEAR",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMORDINATE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMOVERRIDE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMRADIUS",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMREASSOCIATE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMSPACE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "DIMSTYLE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIMTEDIT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DIST",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DISTANCE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "DIVIDE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DONUT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DRAWINGRECOVERY",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "DRAWORDER",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "DSETTINGS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "DSVIEWER",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "DTEXT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "DVIEW",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "DWFOSNAP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "DXBIN",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "DXFOUT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "EDGESURF",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "EDITSHOT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "ELEV",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "ELLIPSE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "ERASE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "EXIT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "EXPLODE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "EXPORT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "EXPORTDWF",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "EXPORTDWFX",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "EXPORTEPLOTFORMAT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "EXPORTPDF",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "EXPORTTOAUTOCAD",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "EXTEND",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "EXTERNALREFERENCES",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "EXTRUDE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "FILL",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "FILLET",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "FILLETEDGE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "FILTER",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "FLATSHOT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "FRAME",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "GEOGRAPHICLOCATION",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "GEOMCONSTRAINT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "GRADIENT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "GRAPHICSCONFIG",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "GROUP",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "GROUPEDIT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "HATCH",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "HATCHEDIT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "HATCHGENERATEBOUNDARY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "HATCHSETBOUNDARY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "HATCHSETORIGIN",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "HATCHTOBACK",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "HELIX",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "HELP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "HIDE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "HIDEPALETTES",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "HORIZONTAL",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "ID",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "IMAGE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "IMAGEADJUST",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "IMAGEATTACH",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "IMAGECLIP",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "IMAGEFRAME",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "IMAGEQUALITY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "IMPORT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "IMPRINT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "INPUTSEARCHDELAY",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "INPUTSEARCHOPTIONS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "INSERT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "INSERTOBJ",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "INTERFERE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "INTERSECT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "ISOLATEOBJECTS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "JOIN",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "LAYER",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "LAYERSTATE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "LAYLOCKFADECTL",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "LAYOUT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "LEADER",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "LENGTHEN",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "LIGHTGLYPHDISPLAY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "LIGHTINGUNITS",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "LIMITS",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "LINE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "LINETYPE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "LIST",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "LOCKUI",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "LTSCALE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "LWEIGHT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "MAP2SDF",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MAPBROWSELINK",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MAPDEFINELT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MAPLOGIN",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MAPSDFIN",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MAPTOPOADMIN",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MAPTOPOQUERY",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MAPWSQUERYEXECUTE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MARKUP",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MASSPROP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "MATBROWSEROPEN",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MATCHPROP",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MATERIALMAP",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MATERIALS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MEASURE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "MEASUREGEOM",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "MESHCREASE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MESHREFINE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MESHSMOOTH",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MESHSMOOTHLESS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MESHSMOOTHMORE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MESHSPLIT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MESHUNCREASE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MIRROR",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "MIRROR3D",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MIRRTEXT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "MLEADER",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "MLEADERALIGN",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "MLEADERCOLLECT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "MLEADEREDIT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "MLEADERSTYLE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MLEDIT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "MLINE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "MODEL",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "MOVE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "MREDO",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "MSPACE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "MTEXT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "MULTIPLE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "MVIEW",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "NAVBAR",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "NAVSMOTION",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "NAVSMOTIONCLOSE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "NAVSWHEEL",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "NAVSWHEELMODE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "NAVVCUBE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "NETLOAD",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "NEW",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "NEWSHOT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "NEWVIEW",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "OFFSET",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "OFFSETEDGE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "OOPS",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "OPEN",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "OPTIONS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "OSMODE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "OSNAP",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "PAGESETUP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PAN",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "PARAMETERS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "PARTIALOAD",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PARTIALOPEN",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "PASTEBLOCK",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PASTECLIP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PASTEORIG",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PASTESPEC",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "PCEXTRACTCENTERLINE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PCEXTRACTCORNER",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PCEXTRACTEDGE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PCEXTRACTSECTION",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PDFOSNAP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PDFSHX",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "PDFSHXTEXTSETTINGS",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PDMODE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PDSIZE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PEDIT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "PELLIPSE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PERSPECTIVE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PICKSTYLE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PLAN",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PLANESURF",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PLINE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "PLOT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "PLOTSTAMP",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "PLOTSTYLE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "POINT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "POINTCLOUDATTACH",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "POINTCLOUDAUTOUPDATE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "POINTCLOUDCROP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "POINTCLOUDCROPSTATE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "POINTCLOUDDENSITY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "POINTCLOUDRTDENSITY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "POINTCLOUDSTYLIZE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "POINTCLOUDUNCROP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "POINTLIGHT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "POLYGON",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "POLYSOLID",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "PRESSPULL",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PREVIEW",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "PROJECTGEOMETRY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PROPERTIES",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "PROPERTIESCLOSE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "PSETUPIN",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PSPACE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "PTYPE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "PUBLISH",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "PURGE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "PUSHTODOCSCLOSE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "PUSHTODOCSOPEN",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "PYRAMID",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "QDIM",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "QLEADER",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "QNEW",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "QSAVE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "QUICKCALC",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "QUICKCUI",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "QUICKPROPERTIES",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "QUIT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "QVDRAWING",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "QVDRAWINGCLOSE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "QVLAYOUT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "QVLAYOUTCLOSE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "RADIUS",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "RAY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "RECOVER",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "RECTANG",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "REDEFINE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "REDO",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "REDRAW",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "REDRAWALL",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "REGEN",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "REGENALL",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "REGENAUTO",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "REGION",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "RENAME",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "RENDER",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "RENDERCROP",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "RENDERENVIRONMENT",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "RENDERPRESETS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "RENDERWINDOW",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "REVERSE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "REVOLVE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "REVSURF",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "ROTATE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "RPREF",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "RULESURF",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SAVE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SAVEAS",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SCALE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SCRIPT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SECTION",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SECTIONPLANE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "SECTIONPLANEJOG",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "SECTIONPLANETOBLOCK",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "SELECT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SEQUENCEPLAY",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SETVAR",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SH",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SHADE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SHADEDIF",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SHADEMODE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SHEETSET",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "SHELL",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SHOWPALETTES",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "SLICE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SNAP",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SNAPMODE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SOLID",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SOLIDEDIT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SOLIDHIST",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SPELL",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "SPHERE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SPLFRAME",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SPLINE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SPLINEDIT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SPLINETYPE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "STANDARDS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "STATUS",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "STRETCH",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "STYLE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SUBOBJSELECTIONMODE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SUBTRACT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SURFACEASSOCIATIVITY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SURFACEAUTOTRIM",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SURFACEMODELINGMODE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SURFBLEND",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SURFEXTEND",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SURFEXTRACTCURVE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SURFFILLET",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SURFNETWORK",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SURFOFFSET",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SURFPATCH",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SURFSCULPT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "SURFTAB1",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SURFTAB2",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SURFTRIM",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SURFTYPE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SURFU",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SURFUNTRIM",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SURFV",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "SYSVARMONITOR",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "TABLE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "TABLESTYLE",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "TABLET",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "TABSURF",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "TEXT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "TEXTALIGN",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "TEXTEDIT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "TEXTSCR",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "THICKEN",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "THICKNESS",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "THUMBSAVE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "TILEMODE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "TIME",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "TOLERANCE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "TOOLBAR",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "TOOLPALETTES",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "TORUS",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "TRANSPARENCY",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "TRIM",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "TYPE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "UCS",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "UCSFOLLOW",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "UCSICON",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "UCSMAN",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "UNDEFINE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "UNDO",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "UNGROUP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "UNION",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "UNISOLATEOBJECTS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "UNITS",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "UOSNAP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "UPDATE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "VERTICAL",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "VIEW",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "VIEWBACK",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "VIEWFORWARD",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "VIEWGO",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "VIEWPLAY",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "VIEWRES",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "VISUALSTYLES",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "VPCLIP",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "VPLAYER",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "VPOINT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "VPORTS",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "VSCURRENT",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "VSMATERIALMODE",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "WALKFLYSETTINGS",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "WBLOCK",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "WEDGE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "WIPEOUT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "WORKSPACELABEL",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "WSCURRENT",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "XATTACH",
+  "verified_in_core_console": false,
+  "in_pgp": true
+ },
+ {
+  "name": "XBIND",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "XCLIP",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "XCLIPFRAME",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "XDWGFADECTL",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "XEDGES",
+  "verified_in_core_console": true,
+  "in_pgp": false
+ },
+ {
+  "name": "XLINE",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "XREF",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ },
+ {
+  "name": "ZOOM",
+  "verified_in_core_console": true,
+  "in_pgp": true
+ }
+]

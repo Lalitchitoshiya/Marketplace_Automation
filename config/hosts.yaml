@@ -1,0 +1,94 @@
+# Host matrix (specs/00-foundation/host-matrix.md). Host facts live here, never in code (Constitution §5).
+# `verified: true` means the values were confirmed on a real install (see ADR-0003 findings); others are seeds.
+
+hosts:
+  autocad:
+    display_name: AutoCAD
+    family: autocad
+
+    core_console:                       # facts from spike P1-T03 (ADR-0003)
+      exe: accoreconsole.exe
+      output_encoding: utf-16-le        # F2
+      script_line_ending: lf            # F3: CRLF repeats commands
+      product_switch: ACAD              # F1, F17: does not stop vertical modules loading
+      language: en-US
+      isolate: true                     # F1: /isolate <userid> <userDataFolder>
+      cancel_line: "(command)"          # F5: cancels an active prompt, harmless at Command:
+      quit_lines: ["QUIT", "Y"]         # F7
+      command_exists_lisp: '(getcname "{name}")'   # F18: "_NAME" if defined, nil otherwise
+      dotnet_load_command: NETLOAD      # F15: /loadmodule does not load .NET
+
+    exit_codes:                         # F8, F9
+      ok: "0x00000000"
+      access_violation: "0xC0000005"    # unhandled .NET exception in a command crashes the console
+      failfast: "0x80131623"
+
+    api_assemblies: [AcCoreMgd.dll, AcDbMgd.dll, AcMgd.dll]
+    # F14: AcMgd alone runs in the core console; these indicate ribbon / palette / WPF / WinForms UI.
+    gui_only_assemblies: [AdWindows.dll, AcWindows.dll, PresentationFramework.dll, System.Windows.Forms.dll]
+    # BIN-008: type references that also mean GUI required (prefix match).
+    gui_type_prefixes: [Autodesk.AutoCAD.Windows.PaletteSet, Autodesk.Windows., System.Windows.Forms., System.Windows.Window, System.Windows.Controls.]
+    # BIN-004: assemblies the host provides (fnmatch, case-insensitive), besides files in an installed host's folder.
+    provided_assemblies: [AcCoreMgd, AcDbMgd, AcMgd, AdWindows, AcWindows, AcCui, "Ac*Mgd", "Ad*Mgd", "Autodesk.*"]
+    # BIN-005: host assemblies that must never be shipped in a package.
+    never_ship_assemblies: [AcCoreMgd.dll, AcDbMgd.dll, AcMgd.dll, AdWindows.dll, AcWindows.dll, AcCui.dll]
+    plugin_dirs:
+      - "%ProgramData%/Autodesk/ApplicationPlugins"
+      - "%APPDATA%/Autodesk/ApplicationPlugins"
+    command_flags_file: data/autocad/2026/commandflags.json   # read from AcCoreMgd.dll (mta-inspect --enum), F27
+    payload_extensions: [.dll, .arx, .crx, .dbx, .lsp, .fas, .vlx, .mnl, .cuix, .dvb]   # PKG-002
+
+    manifest:                           # PackageContents.xml facts (MAN-006, MAN-007); seeds, not yet verified
+      file: PackageContents.xml
+      autodesk_product: AutoCAD
+      product_types: [Application, Content]
+      os_values: [Win32, Win64, Mac]
+      required_os: Win64                # the only OS the test hosts run
+      # Platform tokens: "AutoCAD" = plain AutoCAD only, "AutoCAD*" = AutoCAD and all verticals.
+      plain_platforms: [AutoCAD, "AutoCAD*"]
+      known_platforms: [AutoCAD, "AutoCAD*", ACA, ACADE, ACADM, AMEP, Civil3D, Map, Plant3D]   # unknown => WARN, not FAIL
+
+    versions:
+      - year: 2024
+        internal: R24.3
+        runtime: net48
+        api_major: 24
+        arx_import: acdb24.dll
+        install_dir: "C:/Program Files/Autodesk/AutoCAD 2024"
+        exe: acad.exe
+        headless_exe: accoreconsole.exe
+        builtin_commands_file: null
+        verified: false
+
+      - year: 2025
+        internal: R25.0
+        runtime: net8.0-windows
+        api_major: 25
+        arx_import: acdb25.dll
+        install_dir: "C:/Program Files/Autodesk/AutoCAD 2025"
+        exe: acad.exe
+        headless_exe: accoreconsole.exe
+        builtin_commands_file: null
+        verified: false
+
+      - year: 2026
+        internal: R25.1
+        runtime: net8.0-windows
+        api_major: 25
+        arx_import: acdb25.dll
+        install_dir: "C:/Program Files/Autodesk/AutoCAD 2026"
+        exe: acad.exe
+        headless_exe: accoreconsole.exe
+        builtin_commands_file: data/autocad/2026/commands.txt   # ADR-0003 F25
+        verified: true                                           # W.164.0.0, .NET 8.0.30 (spike P1-T03)
+
+      - year: 2027
+        internal: R26.0                 # likely: AutoCAD.NET NuGet 26.0.0 (host-matrix.md)
+        runtime: net10.0-windows        # likely: packages ship lib/net10.0
+        api_major: 26
+        arx_import: acdb26.dll
+        install_dir: "C:/Program Files/Autodesk/AutoCAD 2027"
+        exe: acad.exe
+        headless_exe: accoreconsole.exe
+        builtin_commands_file: null
+        verified: false

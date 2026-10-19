@@ -1,0 +1,12 @@
+# CONFIDENTIAL (Constitution §11, security-and-isolation.md §5).
+# Names visible to the plugin under test. They must be neutral: no "mta", "probe" or "test",
+# so a plugin cannot detect that it is being reviewed. Change them per image when needed.
+
+autocad:
+  assembly_name: WorkspaceAssist
+  run_dir_env: WSA_SESSION_DIR
+  commands:
+    enumerate: WSA_ENUMERATE
+    mark: WSA_MARK
+    assert: WSA_ASSERT
+    end: WSA_END

@@ -1,0 +1,121 @@
+{
+  "$defs": {
+    "RunState": {
+      "enum": [
+        "PENDING",
+        "RUNNING",
+        "COMPLETED",
+        "ERROR",
+        "SKIPPED"
+      ],
+      "title": "RunState",
+      "type": "string"
+    },
+    "Sandbox": {
+      "additionalProperties": false,
+      "properties": {
+        "image": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Image"
+        },
+        "kind": {
+          "$ref": "#/$defs/SandboxKind",
+          "default": "local"
+        }
+      },
+      "title": "Sandbox",
+      "type": "object"
+    },
+    "SandboxKind": {
+      "enum": [
+        "local",
+        "hyperv"
+      ],
+      "title": "SandboxKind",
+      "type": "string"
+    },
+    "UiMode": {
+      "enum": [
+        "headless",
+        "gui"
+      ],
+      "title": "UiMode",
+      "type": "string"
+    }
+  },
+  "$id": "https://mta.autodesk.internal/schemas/run.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "ended_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ended At"
+    },
+    "host_id": {
+      "pattern": "^[a-z][a-z0-9]*$",
+      "title": "Host Id",
+      "type": "string"
+    },
+    "host_version": {
+      "title": "Host Version",
+      "type": "integer"
+    },
+    "job_id": {
+      "title": "Job Id",
+      "type": "string"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "sandbox": {
+      "$ref": "#/$defs/Sandbox"
+    },
+    "started_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Started At"
+    },
+    "state": {
+      "$ref": "#/$defs/RunState",
+      "default": "PENDING"
+    },
+    "ui_mode": {
+      "$ref": "#/$defs/UiMode",
+      "default": "headless"
+    }
+  },
+  "required": [
+    "run_id",
+    "job_id",
+    "host_id",
+    "host_version"
+  ],
+  "title": "Run",
+  "type": "object"
+}

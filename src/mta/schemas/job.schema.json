@@ -1,0 +1,71 @@
+{
+  "$defs": {
+    "JobState": {
+      "enum": [
+        "RECEIVED",
+        "STATIC_ANALYSIS",
+        "PLANNED",
+        "RUNNING",
+        "AGGREGATING",
+        "REPORTED",
+        "FAILED"
+      ],
+      "title": "JobState",
+      "type": "string"
+    }
+  },
+  "$id": "https://mta.autodesk.internal/schemas/job.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "config_snapshot_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Config Snapshot Sha256",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "job_id": {
+      "title": "Job Id",
+      "type": "string"
+    },
+    "rerun_of": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rerun Of"
+    },
+    "runs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Runs",
+      "type": "array"
+    },
+    "state": {
+      "$ref": "#/$defs/JobState",
+      "default": "RECEIVED"
+    },
+    "submission_id": {
+      "title": "Submission Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "job_id",
+    "submission_id",
+    "config_snapshot_sha256",
+    "created_at"
+  ],
+  "title": "Job",
+  "type": "object"
+}

@@ -1,0 +1,80 @@
+{
+  "report_version": 1,
+  "job_id": "job-20261019-0001",
+  "submission": {
+    "submission_id": "sub-2026-000123",
+    "app_id": "acme.mytools",
+    "app_version": "2.3.0",
+    "package": {
+      "filename": "MyTools.msi",
+      "sha256": "3f1c5e0d6b1a9e2c4d7f8a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+      "size_bytes": 1048576,
+      "kind": "msi"
+    },
+    "products": [{"host_id": "autocad", "versions": [2025, 2026], "verticals": []}],
+    "listing": {
+      "title": "MyTools for AutoCAD",
+      "publisher": "Acme Ltd",
+      "app_type": "desktop",
+      "pricing": "paid",
+      "support_email": "support@acme.example",
+      "privacy_policy_url": "https://acme.example/privacy",
+      "external_domains": ["api.acme.example"]
+    },
+    "features": [
+      {"id": "F1", "name": "Dimension all lines", "commands": ["ACME_DIMALL"], "sample": "samples/site-plan.dwg",
+       "expected": "Every line gets an aligned dimension on layer ACME-DIMS"}
+    ],
+    "received_at": "2026-10-19T09:58:00Z"
+  },
+  "recommendation": "NEEDS_HUMAN",
+  "recommendation_reasons": [
+    "CMD-002 FAIL (MAJOR, provisional) on AutoCAD 2026",
+    "AutoCAD 2025 not installed: dynamic checks SKIPPED"
+  ],
+  "matrix": [
+    {"host_id": "autocad", "host_version": 2026, "ui_mode": "headless",
+     "summary": {"pass": 31, "fail": 1, "warn": 0, "needs_review": 0, "skipped": 3, "error": 0}}
+  ],
+  "results": [
+    {
+      "check_id": "SIG-003",
+      "target": {"subject": "package"},
+      "status": "PASS",
+      "severity": "BLOCKER",
+      "source": "static",
+      "message": "Microsoft Defender scan clean (412 files)"
+    },
+    {
+      "check_id": "CMD-002",
+      "target": {"run_id": "run-0001", "host_id": "autocad", "host_version": 2026, "subject": "command:ACME_DIMALL"},
+      "status": "FAIL",
+      "severity": "MAJOR",
+      "source": "dynamic",
+      "message": "Command ACME_DIMALL threw System.NullReferenceException on a blank drawing",
+      "evidence": [
+        {"kind": "excerpt", "excerpt": "System.NullReferenceException at Acme.Tools.DimAll.Run()"},
+        {"kind": "log", "ref": "sha256:9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b"}
+      ],
+      "remediation": "Guard against an empty model space before iterating entities.",
+      "duration_ms": 412
+    },
+    {
+      "check_id": "LOD-001",
+      "target": {"run_id": "run-0002", "host_id": "autocad", "host_version": 2025, "subject": "component:MyTools"},
+      "status": "SKIPPED",
+      "severity": "BLOCKER",
+      "source": "dynamic",
+      "message": "AutoCAD 2025 is not installed on the test machine"
+    }
+  ],
+  "inventory": {
+    "commands": [{"name": "ACME_DIMALL", "source": "binary"}]
+  },
+  "artifacts": [
+    {"sha256": "9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b", "kind": "log",
+     "path": "artifacts/run-0001/console.log", "run_id": "run-0001"}
+  ],
+  "mta": {"version": "0.1.0", "config_sha256": "fa5c34f84c29703131c3600b17b15231c688ced0b6f2a90536e52d89cd57e670",
+          "duration_ms": 512000}
+}

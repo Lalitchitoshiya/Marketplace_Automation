@@ -1,0 +1,200 @@
+{
+  "$defs": {
+    "CheckTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "host_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z][a-z0-9]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host Id"
+        },
+        "host_version": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Host Version"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "subject": {
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject"
+      ],
+      "title": "CheckTarget",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "excerpt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Excerpt"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ref"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "Severity": {
+      "enum": [
+        "BLOCKER",
+        "MAJOR",
+        "MINOR",
+        "INFO"
+      ],
+      "title": "Severity",
+      "type": "string"
+    },
+    "Source": {
+      "enum": [
+        "static",
+        "dynamic",
+        "monitor",
+        "ai"
+      ],
+      "title": "Source",
+      "type": "string"
+    },
+    "Status": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "WARN",
+        "NEEDS_REVIEW",
+        "SKIPPED",
+        "ERROR"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "$id": "https://mta.autodesk.internal/schemas/check-result.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "check_id": {
+      "pattern": "^[A-Z]{2,4}-\\d{3}$",
+      "title": "Check Id",
+      "type": "string"
+    },
+    "confidence": {
+      "default": 1.0,
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Confidence",
+      "type": "number"
+    },
+    "duration_ms": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Duration Ms"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "message": {
+      "title": "Message",
+      "type": "string"
+    },
+    "remediation": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Remediation"
+    },
+    "severity": {
+      "$ref": "#/$defs/Severity"
+    },
+    "source": {
+      "$ref": "#/$defs/Source"
+    },
+    "status": {
+      "$ref": "#/$defs/Status"
+    },
+    "target": {
+      "$ref": "#/$defs/CheckTarget"
+    }
+  },
+  "required": [
+    "check_id",
+    "target",
+    "status",
+    "severity",
+    "source",
+    "message"
+  ],
+  "title": "CheckResult",
+  "type": "object"
+}

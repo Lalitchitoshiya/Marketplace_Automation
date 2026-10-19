@@ -1,0 +1,59 @@
+# Runtime configuration of the check catalog (specs/00-foundation/check-catalog.md). Phase 1 checks only.
+#
+# provisional: a check stays non-blocking (severity capped at MAJOR) until the corpus shows <= 5% false
+# positives (check-catalog.md, Rules). Only the safety gates PKG-001 and SIG-003 are blocking from day one.
+
+recommendation:
+  error_means_needs_human: true      # data-contracts.md §5: any ERROR => NEEDS_HUMAN
+  provisional_severity_cap: MAJOR
+
+checks:
+  # PKG: package
+  PKG-001: {severity: BLOCKER, provisional: false, title: "Package extracts safely"}
+  PKG-002: {severity: BLOCKER, title: "Package kind identified with deployable payload"}
+  PKG-003: {severity: MAJOR,   title: "MSI administrative extraction succeeds"}
+  PKG-004: {severity: BLOCKER, title: "Bundle layout valid"}
+  PKG-005: {severity: MAJOR,   title: "No unexpected executable script types"}
+  PKG-006: {severity: MINOR,   title: "Package version matches listing"}
+  # MAN: manifest
+  MAN-001: {severity: BLOCKER, title: "Manifest well-formed and schema-valid"}
+  MAN-002: {severity: MAJOR,   title: "Required manifest metadata present"}
+  MAN-003: {severity: MAJOR,   title: "Declared version range covers listing versions"}
+  MAN-004: {severity: BLOCKER, title: "Every component module exists"}
+  MAN-005: {severity: MINOR,   title: "Manifest commands match binary commands"}
+  MAN-006: {severity: MAJOR,   title: "OS / Platform / ProductType values valid"}
+  MAN-007: {severity: MINOR,   title: "Every component maps to a configured host version"}
+  # BIN: binary inspection
+  BIN-001: {severity: BLOCKER, title: "Target framework compatible with host version"}
+  BIN-002: {severity: BLOCKER, title: "Host API references compatible with host version"}
+  BIN-003: {severity: BLOCKER, title: "Native binaries are x64"}
+  BIN-004: {severity: BLOCKER, title: "All referenced assemblies resolvable"}
+  BIN-005: {severity: MAJOR,   title: "Host API assemblies not shipped in package"}
+  BIN-006: {severity: INFO,    title: "Hard-coded URL / IP inventory"}
+  BIN-007: {severity: MAJOR,   title: "Risky API usage inventory"}
+  BIN-008: {severity: INFO,    title: "Core-console compatibility (GUI-required)"}
+  BIN-009: {severity: INFO,    title: "Obfuscation detected"}
+  # SIG: signing and malware
+  SIG-001: {severity: MAJOR,   title: "Authenticode signature present"}
+  SIG-002: {severity: MAJOR,   title: "Signature valid, trusted, timestamped"}
+  SIG-003: {severity: BLOCKER, provisional: false, title: "Malware scan clean"}
+  # LST: listing
+  LST-001: {severity: MAJOR,   title: "Privacy policy URL reachable over HTTPS"}
+  LST-002: {severity: MINOR,   title: "Support email valid with MX record"}
+  LST-003: {severity: MAJOR,   title: "Listing products/versions consistent with package"}
+  # LOD: load
+  LOD-001: {severity: BLOCKER, title: "Every component loads without exception"}
+  LOD-002: {severity: MINOR,   title: "Component load time within threshold"}
+  LOD-003: {severity: BLOCKER, title: "Host startup completes with plugin"}
+  # CMD: commands
+  CMD-001: {severity: MAJOR,   title: "Declared commands registered at runtime"}
+  CMD-002: {severity: BLOCKER, title: "Smoke invoke without unhandled exception"}
+  CMD-003: {severity: MAJOR,   title: "No collision with built-in command names"}
+  CMD-004: {severity: MAJOR,   title: "Command does not hang"}
+  # WFL: scenarios
+  WFL-001: {severity: MAJOR,   title: "Scenario steps execute"}
+  WFL-002: {severity: MAJOR,   title: "Scenario assertions hold"}
+  # RUN: runtime health
+  RUN-001: {severity: BLOCKER, title: "Host process did not crash"}
+  RUN-002: {severity: BLOCKER, title: "No unhandled plugin exceptions"}
+  RUN-003: {severity: MAJOR,   title: "Host exits cleanly on quit"}

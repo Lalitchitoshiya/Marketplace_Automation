@@ -1,0 +1,35 @@
+# Timeouts and limits (specs/phase-1-autocad-headless/design.md §8).
+# Core-console runs took 5-17 s depending on machine load (docs/workstation.md), so timeouts are generous.
+
+coreconsole:
+  startup_timeout_s: 90
+  quit_timeout_s: 30
+
+load:
+  per_component_warn_s: 5
+  per_component_timeout_s: 60
+
+smoke:
+  per_command_timeout_s: 20
+  cancel_lines: 2              # "(command)" lines after each command (ADR-0003 F5)
+  batch: true                  # batch first, per-command isolation after an anomaly
+
+scenario:
+  default_timeout_s: 120
+
+extract:
+  max_bytes: 2147483648        # 2 GB (PKG-001)
+  max_files: 20000
+  max_compression_ratio: 100   # zip bomb guard; real DLL/text entries stay well below 20
+  ratio_min_bytes: 1048576     # ratio only checked for entries over 1 MB
+  msi_timeout_s: 300           # msiexec /a
+
+kit:                           # submission-inputs.md §2
+  doc_max_bytes: 52428800      # 50 MB
+  screenshot_max_bytes: 10485760
+  screenshot_max_count: 30
+  video_max_bytes: 524288000
+  sample_max_bytes: 524288000
+
+doctor:
+  deep_max_start_quit_s: 30    # canary run budget (P1-R03)
