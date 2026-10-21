@@ -17,8 +17,9 @@ def excerpt(lines: Iterable[str]) -> str:
 
 
 class ResultSink:
-    def __init__(self, cfg: MtaConfig) -> None:
+    def __init__(self, cfg: MtaConfig, source: Source = Source.STATIC) -> None:
         self._cfg = cfg
+        self._source = source
         self.items: list[CheckResult] = []
 
     def add(
@@ -43,7 +44,7 @@ class ResultSink:
                 ),
                 status=status,
                 severity=self._cfg.checks.effective_severity(check_id),
-                source=Source.STATIC,
+                source=self._source,
                 message=message,
                 evidence=[Evidence(kind="excerpt", excerpt=excerpt)] if excerpt else [],
                 remediation=fix,

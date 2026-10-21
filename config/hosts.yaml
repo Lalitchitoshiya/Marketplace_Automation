@@ -17,6 +17,8 @@ hosts:
       quit_lines: ["QUIT", "Y"]         # F7
       command_exists_lisp: '(getcname "{name}")'   # F18: "_NAME" if defined, nil otherwise
       dotnet_load_command: NETLOAD      # F15: /loadmodule does not load .NET
+      crash_reporter: [senddmp.exe, cer_dialog.exe]   # F29: Autodesk CER, killed during runs
+      errors_file: data/autocad/console_errors.yaml   # infrastructure problems => ERROR (P1-R18)
 
     exit_codes:                         # F8, F9
       ok: "0x00000000"
@@ -83,12 +85,12 @@ hosts:
         verified: true                                           # W.164.0.0, .NET 8.0.30 (spike P1-T03)
 
       - year: 2027
-        internal: R26.0                 # likely: AutoCAD.NET NuGet 26.0.0 (host-matrix.md)
-        runtime: net10.0-windows        # likely: packages ship lib/net10.0
+        internal: R26.0                 # ACADVER 26.0 (ADR-0003 F31)
+        runtime: net10.0-windows        # .NET 10.0.11 in the core console (F31)
         api_major: 26
         arx_import: acdb26.dll
         install_dir: "C:/Program Files/Autodesk/AutoCAD 2027"
         exe: acad.exe
         headless_exe: accoreconsole.exe
         builtin_commands_file: null
-        verified: false
+        verified: true                  # step 12: deep doctor check passes (F31)

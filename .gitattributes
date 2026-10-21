@@ -1,0 +1,9 @@
+# Keep LF everywhere: AutoCAD core-console scripts break with CRLF (ADR-0003 F3), and LF keeps diffs stable.
+* text=auto eol=lf
+*.sln text eol=crlf
+*.dll binary
+*.exe binary
+*.msi binary
+*.png binary
+*.pdf binary
+*.docx binary

@@ -3,7 +3,16 @@
     <Project Path="src/MtaInspect/MtaInspect.csproj" />
   </Folder>
   <Folder Name="/synthetic/">
+    <Project Path="synthetic/Canary/Canary.csproj" />
     <Project Path="synthetic/Sd01Clean/Sd01Clean.csproj" />
+    <Project Path="synthetic/Sd17GuiRibbon/Sd17GuiRibbon.csproj" />
+    <Project Path="synthetic/Sd02InitThrow/Sd02InitThrow.csproj" />
+    <Project Path="synthetic/Sd03NullRef/Sd03NullRef.csproj" />
+    <Project Path="synthetic/Sd04Hang/Sd04Hang.csproj" />
+    <Project Path="synthetic/Sd05NativeCrash/Sd05NativeCrash.csproj" />
+    <Project Path="synthetic/Sd07Helper/Sd07Helper.csproj" />
+    <Project Path="synthetic/Sd07MissingDep/Sd07MissingDep.csproj" />
+    <Project Path="synthetic/Sd16Collision/Sd16Collision.csproj" />
   </Folder>
   <Folder Name="/tests/fixtures/">
     <Project Path="tests/fixtures/FakeAcCoreMgd/FakeAcCoreMgd.csproj" />

@@ -24,7 +24,15 @@ from mta.static.bundle import (
 )
 from mta.static.bundle_checks import BundleAnalysis, analyze_bundle, normalize_version
 from mta.static.stage import run_static_stage
-from tests.conftest import PACKAGE_CONTENTS, KitFactory, clean_scanner, make_bundle, make_msi, make_zip
+from tests.conftest import (
+    OFFLINE_SERVICES,
+    PACKAGE_CONTENTS,
+    KitFactory,
+    clean_scanner,
+    make_bundle,
+    make_msi,
+    make_zip,
+)
 from tests.msi_builder import build_msi
 
 GUID = "{6B1B5E2A-3C1D-4E0B-9F3A-0A1B2C3D4E5F}"
@@ -329,7 +337,7 @@ def test_pkg006_version_checks(tmp_path: Path, cfg: MtaConfig) -> None:
 def test_stage_writes_bundle_json(make_kit: KitFactory, cfg: MtaConfig, tmp_path: Path) -> None:
     data = tmp_path / "data"
     intake = intake_kit(make_kit("zip"), cfg, data, clean_scanner)
-    outcome = run_static_stage(intake, cfg, data)
+    outcome = run_static_stage(intake, cfg, data, OFFLINE_SERVICES)
     assert outcome.bundle is not None
     bundle = json.loads((intake.job_dir / "bundle.json").read_text("utf-8"))
     assert bundle["bundle"] == "Acme.bundle"

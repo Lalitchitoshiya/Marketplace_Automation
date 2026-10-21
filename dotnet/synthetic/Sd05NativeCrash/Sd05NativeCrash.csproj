@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- SD-05: a command crashes the host in native code, expected RUN-001 (testing-strategy.md). MTA-owned synthetic defect plugin: run only by the corpus. -->
+  <PropertyGroup>
+    <TargetFramework>$(AcadTfm)</TargetFramework>
+    <UsesAutoCAD>true</UsesAutoCAD>
+  </PropertyGroup>
+
+</Project>

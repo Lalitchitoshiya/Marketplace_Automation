@@ -50,3 +50,12 @@ Timing varies with machine load, so health-check and watchdog thresholds must al
 
 ## Spike reproducibility check (2026-10-19)
 Re-ran `a_basic`, `b_throw` and `l_lisp_cancel`. Exit codes and event sequences were **identical** to the first run.
+
+## Build and check (step 12)
+```
+uv run mta probe build      # the probe, per installed AutoCAD API major (R25: .NET 8, R26: .NET 10)
+uv run mta corpus build     # canary + synthetic plugins, same per-major builds
+uv run mta doctor --deep    # must say HEALTHY before dynamic results are trusted
+```
+- Keep the data folder short (default `.mta\`, or e.g. `C:\mta`). `/isolate` fails past MAX_PATH (ADR-0003 F28), and `mta doctor` checks it.
+- A crashing plugin no longer leaves Autodesk's crash dialog on screen: the runner suppresses it (F29, F30).

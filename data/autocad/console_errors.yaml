@@ -1,0 +1,14 @@
+# Console output that means the environment failed, not the plugin (requirements.md P1-R18).
+# A match makes the run's dynamic checks ERROR. Patterns are case-insensitive regular expressions.
+- id: isolate
+  pattern: "Failed to create registry keys or files necessary when using the /isolate switch"
+  hint: "Run folder path too long or profile copy failed (ADR-0003 F28)"
+- id: licence
+  pattern: "(unable to (obtain|get|check out) a? ?licen[cs]e|licen[cs]e (error|not available|has expired)|no valid licen[cs]e)"
+  hint: "AutoCAD licensing problem on the test machine (D-LIC)"
+- id: sign-in
+  pattern: "(sign in to|signin required|please sign in)"
+  hint: "Autodesk account sign-in required for the test user"
+- id: startup
+  pattern: "(cannot start|failed to initiali[sz]e (the )?(application|product))"
+  hint: "AutoCAD core console failed to start"

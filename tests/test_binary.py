@@ -1,5 +1,6 @@
 """mta-inspect wrapper, native PE reading and rules BIN-001...009, CMD-003, MAN-005 (step 9)."""
 
+import dataclasses
 import json
 import os
 import subprocess
@@ -20,7 +21,7 @@ from mta.static.bundle_checks import analyze_bundle
 from mta.static.dotnet import AssemblyReport, InspectError, find_inspect, inspect_files
 from mta.static.native import NativeReport, read_native
 from mta.static.stage import run_static_stage
-from tests.conftest import PACKAGE_CONTENTS, KitFactory, clean_scanner, make_bundle
+from tests.conftest import OFFLINE_SERVICES, PACKAGE_CONTENTS, KitFactory, clean_scanner, make_bundle
 
 DLL = "Acme.bundle/Contents/Acme.dll"
 
@@ -476,7 +477,8 @@ def test_stage_writes_inspection(
     )
     data = tmp_path / "data"
     intake = intake_kit(kit, cfg, data, clean_scanner)
-    outcome = run_static_stage(intake, cfg, data)
+    real = dataclasses.replace(OFFLINE_SERVICES, inspect=lambda f: inspect_files(f, net_fixtures["inspect"]))
+    outcome = run_static_stage(intake, cfg, data, real)
     assert outcome.binary is not None
     inspection = json.loads((intake.job_dir / "inspection.json").read_text("utf-8"))
     assert inspection["components"][0]["gui_required"] is True

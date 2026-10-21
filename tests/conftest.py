@@ -1,5 +1,6 @@
 """Shared fixtures: config, synthetic packages, documents and Input Kits."""
 
+import functools
 import subprocess
 import zipfile
 from collections.abc import Callable
@@ -9,7 +10,10 @@ import docx
 import pytest
 
 from mta.config import REPO_ROOT, MtaConfig, load_config
+from mta.static.dotnet import AssemblyReport, ObfuscationInfo
 from mta.static.malware import ScanOutcome, ScanResult
+from mta.static.signing import SignatureInfo
+from mta.static.stage import StaticServices
 
 OLE_MAGIC = bytes.fromhex("D0CF11E0A1B11AE1")
 
@@ -183,3 +187,70 @@ def net_fixtures() -> dict[str, Path]:
             if done.returncode != 0:
                 pytest.skip(f"cannot build {project}: {done.stdout.decode(errors='replace')[-500:]}")
     return NET_FIXTURES
+
+
+# ---- offline services for the static stage (no Defender, PowerShell or network) -------------------------
+
+
+def unsigned_signatures(files: list[Path], _timeout: int) -> list[SignatureInfo]:
+    return [
+        SignatureInfo(str(f), "NotSigned", "not signed", "None", None, None, None, None, False) for f in files
+    ]
+
+
+def fake_open_url(url: str, _timeout: int) -> tuple[int, str | None]:
+    return 200, None
+
+
+def fake_resolve(name: str, rdtype: str, _timeout: int) -> list[str]:
+    return [f"10 mail.{name}."]
+
+
+def not_pe_inspect(files: list[Path]) -> list[AssemblyReport]:
+    """The conftest DLLs are fakes ("MZ fake dll"): report them as mta-inspect would, without the process."""
+    return [
+        AssemblyReport(
+            path=str(f),
+            is_managed=False,
+            machine="UNKNOWN",
+            architecture="unknown",
+            mixed_mode=False,
+            assembly_name=None,
+            assembly_version=None,
+            target_framework=None,
+            obfuscation=ObfuscationInfo(suspected=False, signals=[]),
+            error="BadImageFormatException: not a PE",
+        )
+        for f in files
+    ]
+
+
+OFFLINE_SERVICES = StaticServices(
+    scanner=clean_scanner,
+    signatures=unsigned_signatures,
+    open_url=fake_open_url,
+    resolve=fake_resolve,
+    inspect=not_pe_inspect,
+)
+
+
+@pytest.fixture
+def offline_cli(monkeypatch: pytest.MonkeyPatch) -> None:
+    """CLI commands use the offline fakes for signatures and network (the scanner still follows --no-scan),
+    and `mta run` gets an empty dynamic stage: unit tests never start AutoCAD."""
+    from mta.adapters.autocad.dynamic import DynamicOutcome
+    from mta.cli import kit_cmds
+
+    monkeypatch.setattr(kit_cmds, "run_dynamic_stage", lambda *a, **k: DynamicOutcome())
+
+    monkeypatch.setattr(
+        kit_cmds,
+        "StaticServices",
+        functools.partial(
+            StaticServices,
+            signatures=unsigned_signatures,
+            open_url=fake_open_url,
+            resolve=fake_resolve,
+            inspect=not_pe_inspect,
+        ),
+    )

@@ -44,3 +44,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: dotnet build dotnet/Mta.slnx -c Release
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync
+      # The probe is built from the confidential identity config (step 11), then exercised in the real core console.
+      - run: uv run mta probe build
+      - run: dotnet build dotnet/synthetic/Sd01Clean -c Release
+      - run: uv run pytest -m autocad --no-cov

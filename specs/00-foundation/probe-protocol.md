@@ -11,6 +11,13 @@ Probes run **inside** the host process. They observe the plugin and execute test
 
 The environment variable `MTA_RUN_DIR` is set before the host launches. If the probe cannot write events, the run is `ERROR`.
 
+**Neutral names on the wire.** A plugin could find the run folder through the environment, so every name it could see comes from `config/probe_identity.yaml` (Constitution §11):
+- the environment variable (`run_dir_env`, e.g. `WSA_SESSION_DIR`);
+- the plan and event file names (`plan_file` / `events_file`, e.g. `session.json` / `session.log`);
+- the assembly, command and LISP-function names.
+
+`MTA_RUN_DIR`, `probe-plan.json` and `probe-events.ndjson` in this document are placeholders. For the same reason the probe's own events are named `session.start` / `session.error` / `session.shutdown` on the wire, and `probe_version` is sent as `version`. `test_built_probe_reveals_nothing` checks that the built DLL contains no "mta", "probe" or "test".
+
 ## 2. Event envelope
 ```json
 {"v":1,"seq":17,"ts":"2026-10-19T10:02:03.120Z","run_id":"r-8f2c","type":"command.invoke.end",
@@ -37,6 +44,21 @@ The environment variable `MTA_RUN_DIR` is set before the host launches. If the p
 | `artifact` | kind, path, sha256 | Probe produced a file |
 | `probe.error` | message, stack | Probe internal failure → `ERROR` |
 | `probe.shutdown` | reason | Clean end |
+
+**Added in step 11 (AutoCAD core console, v1 minor additions):**
+
+| type | data fields | Emitted when |
+|---|---|---|
+| `mark` | phase (`begin`/`end`), label | The script brackets a smoke invocation (`MARK begin X` … `MARK end X`) |
+| `command.start` / `.ended` / `.cancelled` / `.failed` / `.unknown` | name, mark | Raw `Document.Command*` events (ADR-0003 F19); the runner derives `command.invoke.*` outcomes from them |
+| `prompt` | kind (`string`/`keyword`/`point`/…), message, mark | `Editor.PromptingFor*`, excluding the probe's own argument prompts |
+| `command.defined` | name, defined, global | The script reports `(getcname "X")` through the probe's LISP function (F18) |
+| `enumerate.end` | count | After the `command.registered` events of an enumerate |
+| `note` | kind, name, value | Other values reported through the LISP function |
+
+`component.load.end` also carries `loaded`: whether an assembly from exactly that file is now in the process. That is the load evidence; the `assembly.load` event was missing for one WPF plugin in step 12. It also carries `plugin_exceptions`: the plugin first-chance exceptions seen during the load. An exception in `Initialize` is otherwise silent (F11). Exception events carry the active `mark`.
+
+**Driving the probe:** every probe command reads one argument from the next script line (`GetString`, spaces allowed). For example, the `load` command followed by a component name loads that component from the plan.
 
 New event types may be added in a minor version. Consumers must ignore unknown types.
 

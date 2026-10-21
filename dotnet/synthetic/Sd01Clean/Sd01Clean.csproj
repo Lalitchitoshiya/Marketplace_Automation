@@ -4,7 +4,7 @@
        Also the base of the canary plugin used by the deep environment health check (mta doctor, deep mode). -->
   <PropertyGroup>
     <UsesAutoCAD>true</UsesAutoCAD>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>$(AcadTfm)</TargetFramework>
     <PlatformTarget>x64</PlatformTarget>
     <RootNamespace>Mta.Synthetic.Sd01</RootNamespace>
   </PropertyGroup>

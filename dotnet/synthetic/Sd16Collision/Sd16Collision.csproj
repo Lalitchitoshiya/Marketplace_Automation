@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- SD-16: a command named like a built-in (LINE), expected CMD-003 (testing-strategy.md). MTA-owned synthetic defect plugin: run only by the corpus. -->
+  <PropertyGroup>
+    <TargetFramework>$(AcadTfm)</TargetFramework>
+    <UsesAutoCAD>true</UsesAutoCAD>
+  </PropertyGroup>
+
+</Project>

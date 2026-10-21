@@ -36,7 +36,23 @@ All of it runs in disposable VMs, behind a queue and a reviewer dashboard.
 | D-IDP | Autodesk OIDC client for dashboard SSO |
 | D-STORE | Approved artifact storage (Azure Blob / S3 / on-prem) |
 
-## 4. Requirements (EARS)
+## 3a. Carried over from Phase 1 (retrospective, step 15)
+Facts and debts found in Phase 1 that this phase must respect. Sources are ADR-0003 F1–F31 and the step tracker.
+
+| # | Phase 1 learning | Consequence for Phase 2 |
+|---|---|---|
+| L1 | AutoCAD's API major is a binary break: R25 (2025/2026, .NET 8) and R26 (2027, .NET 10). AutoCAD 2027 is already released (F31). | Golden images per version. The probe and corpus are built per major (`mta probe build`, `mta corpus build`). The version matrix (P2-R19) includes 2027 from day one. |
+| L2 | A crash starts Autodesk's crash reporter (dialog plus upload); the crashed console then often never exits (F29, F30). | VM network isolation (P2-R04) must block crash-report uploads. GUI runs (`acad.exe`) must suppress the same reporter. The post-crash grace kill also applies to GUI hosts. |
+| L3 | `/isolate` fails with long run paths, because vertical products' roaming folders overflow MAX_PATH (F28). | Guest run roots stay short (`C:\mta\`). |
+| L4 | The autoloader in the core console was inconclusive (F16). | P2-R08 must verify autoloading in the GUI host, and use it as LOD-004. |
+| L5 | GUI-only plugins (ribbon, palettes) give LOD-001 NEEDS_REVIEW headless (SD-17). | Phase 2 GUI runs must turn these into real LOD/UI results; SD-17 is the regression case. |
+| L6 | A false PASS happened when the loader reported success without loading anything (recursive TRUSTEDPATHS). | Every load result needs independent evidence (the probe's `loaded`). Keep this for `.addin`/GUI loaders. |
+| L7 | Shipped copies of host DLLs were analysed as plugin code (SD-08). | Behaviour monitoring (P2-R15) must attribute activity of host-shipped DLLs to the host, not the publisher. |
+| L8 | The synthetic corpus can only be signed with an untrusted certificate (P1-Q07). | A trusted test code-signing certificate is needed before signing checks can be fully green in the corpus. |
+| L9 | WER LocalDumps needs administrator rights and is not configured on developer machines. | Golden images configure LocalDumps (P2-R02). |
+| L10 | Bot protection answers automated HTTP checks with 403 (LST-001). | Dashboard (P2-R24): show "check in a browser" findings as reviewer tasks. |
+
+
 
 ### Epic E1 — Sandbox
 **P2-R01 Disposable VMs.**

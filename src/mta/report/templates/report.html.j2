@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review report – {{ report.submission.app_id }} {{ report.submission.app_version }}</title>
+<style>
+:root { --bg:#f7f7f8; --card:#fff; --text:#1d1d1f; --muted:#6b6b72; --line:#e3e3e8;
+  --pass:#1a7f37; --fail:#c62828; --error:#8e24aa; --review:#b26a00; --warn:#b8860b; --skip:#7a7a80; --code:#f2f2f5; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#151517; --card:#1e1e21; --text:#eceff1; --muted:#a0a0a8; --line:#33333a; --code:#111113; }
+}
+* { box-sizing:border-box; }
+body { margin:0; font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif; background:var(--bg); color:var(--text); }
+main { max-width:1180px; margin:0 auto; padding:16px; }
+section { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin:14px 0; }
+h1 { font-size:20px; margin:0 0 4px; } h2 { font-size:16px; margin:0 0 10px; } h3 { font-size:14px; margin:14px 0 6px; }
+a { color:inherit; }
+.muted { color:var(--muted); }
+.banner { border-left:8px solid var(--skip); }
+.banner.RECOMMEND_APPROVE { border-left-color:var(--pass); }
+.banner.RECOMMEND_REJECT { border-left-color:var(--fail); }
+.banner.NEEDS_HUMAN { border-left-color:var(--review); }
+.verdict { font-size:22px; font-weight:700; letter-spacing:.3px; }
+.RECOMMEND_APPROVE .verdict { color:var(--pass); }
+.RECOMMEND_REJECT .verdict { color:var(--fail); }
+.NEEDS_HUMAN .verdict { color:var(--review); }
+.chip { display:inline-block; padding:1px 8px; border-radius:999px; font-size:12px; font-weight:600; color:#fff; white-space:nowrap; }
+.s-PASS{background:var(--pass)} .s-FAIL{background:var(--fail)} .s-ERROR{background:var(--error)}
+.s-NEEDS_REVIEW{background:var(--review)} .s-WARN{background:var(--warn)} .s-SKIPPED{background:var(--skip)}
+table { border-collapse:collapse; width:100%; }
+th, td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+th { font-size:12px; color:var(--muted); font-weight:600; }
+.wrap { overflow-x:auto; }
+details { border-bottom:1px solid var(--line); padding:6px 0; }
+summary { cursor:pointer; list-style:none; }
+summary::-webkit-details-marker { display:none; }
+.row { display:flex; gap:10px; align-items:baseline; flex-wrap:wrap; }
+.id { font-family:ui-monospace,Consolas,monospace; font-weight:600; }
+pre { background:var(--code); border:1px solid var(--line); border-radius:6px; padding:8px; overflow:auto; max-height:320px;
+  white-space:pre-wrap; word-break:break-word; font:12px/1.4 ui-monospace,Consolas,monospace; }
+.filters { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+select { font:inherit; padding:2px 6px; }
+.shots { display:flex; flex-wrap:wrap; gap:12px; }
+.shots figure { margin:0; max-width:360px; }
+.shots img { max-width:100%; border:1px solid var(--line); border-radius:6px; }
+figcaption { font-size:12px; color:var(--muted); }
+.fix { margin-top:6px; }
+@media print { .filters { display:none; } }
+</style>
+</head>
+<body>
+<main>
+<section class="banner {{ report.recommendation }}">
+  <div class="muted">Marketplace review · internal: never share with the publisher (Constitution §11)</div>
+  <h1>{{ report.submission.listing.title if report.submission.listing else report.submission.app_id }}
+    <span class="muted">{{ report.submission.app_version }}</span></h1>
+  <div class="verdict">{{ report.recommendation | replace("RECOMMEND_", "") | replace("_", " ") }}</div>
+  {% if report.recommendation_reasons %}
+  <ul>{% for reason in report.recommendation_reasons %}<li>{{ reason }}</li>{% endfor %}</ul>
+  {% else %}
+  <p>No blocking findings. Look at the warnings below before approving.</p>
+  {% endif %}
+  <div class="muted">App id {{ report.submission.app_id }} · package {{ report.submission.package.filename }}
+    ({{ report.submission.package.kind }}) · job {{ report.job_id }} · {{ (report.mta.duration_ms / 1000) | round(1) }} s ·
+    MTA {{ report.mta.version }} · config {{ report.mta.config_sha256[:12] }}</div>
+  <div class="row" style="margin-top:8px">
+  {% for s, n in counts.items() if n %}<span class="chip s-{{ s }}">{{ s | replace("_", " ") }} {{ n }}</span>{% endfor %}
+  </div>
+</section>
+
+<section>
+  <h2>Versions</h2>
+  <div class="wrap"><table>
+    <tr><th>AutoCAD</th><th>Mode</th><th>Pass</th><th>Fail</th><th>Needs review</th><th>Warn</th><th>Error</th><th>Skipped</th></tr>
+    {% for m in report.matrix %}
+    <tr><td><b>{{ m.host_version }}</b></td><td>{{ m.ui_mode }}</td><td>{{ m.summary["pass"] }}</td>
+      <td>{% if m.summary.fail %}<span class="chip s-FAIL">{{ m.summary.fail }}</span>{% else %}0{% endif %}</td>
+      <td>{{ m.summary.needs_review }}</td><td>{{ m.summary.warn }}</td><td>{{ m.summary.error }}</td><td>{{ m.summary.skipped }}</td></tr>
+    {% else %}
+    <tr><td colspan="8" class="muted">No version information.</td></tr>
+    {% endfor %}
+  </table></div>
+</section>
+
+<section>
+  <h2>Findings</h2>
+  <div class="filters">
+    <label>Status <select id="f-status"><option value="">all</option><option value="problems">problems only</option>
+      {% for s in counts if counts[s] %}<option>{{ s }}</option>{% endfor %}</select></label>
+    <label>Severity <select id="f-severity"><option value="">all</option>
+      {% for s in ["BLOCKER", "MAJOR", "MINOR", "INFO"] %}<option>{{ s }}</option>{% endfor %}</select></label>
+    <label>Version <select id="f-version"><option value="">all</option>
+      {% for v in versions %}<option>{{ v }}</option>{% endfor %}</select></label>
+  </div>
+  {% for family, items in families %}
+  <h3>{{ family_names.get(family, family) }}</h3>
+  {% for r in items %}
+  <details class="finding" data-status="{{ r.status }}" data-severity="{{ r.severity }}"
+    data-version="{{ r.target.host_version or '' }}"{% if r.status in ["FAIL", "ERROR", "NEEDS_REVIEW"] %} open{% endif %}>
+    <summary><div class="row"><span class="chip s-{{ r.status }}">{{ r.status | replace("_", " ") }}</span>
+      <span class="id">{{ r.check_id }}</span><span class="muted">{{ r.severity }}</span>
+      {% if r.target.host_version %}<span class="muted">AutoCAD {{ r.target.host_version }}</span>{% endif %}
+      {% if r.target.subject != "package" %}<span class="muted">{{ r.target.subject }}</span>{% endif %}
+      <span>{{ r.message }}</span></div></summary>
+    {% for e in r.evidence %}
+    {% if e.excerpt %}<pre>{{ e.excerpt }}</pre>{% endif %}
+    {% if e.ref %}<div class="muted">artifact {{ e.ref }}</div>{% endif %}
+    {% endfor %}
+    {% if r.remediation %}<div class="fix"><b>Fix:</b> {{ r.remediation }}</div>{% endif %}
+    {% if r.confidence < 1 %}<div class="muted">Confidence {{ r.confidence }} (obfuscated binary, BIN-009)</div>{% endif %}
+  </details>
+  {% endfor %}
+  {% endfor %}
+</section>
+
+<section>
+  <h2>Commands</h2>
+  <div class="wrap"><table>
+    <tr><th>Command</th><th>Group</th>{% for v in versions %}<th>AutoCAD {{ v }}</th>{% endfor %}</tr>
+    {% for c in commands %}
+    <tr><td class="id">{{ c.name }}</td><td>{{ c.group or "" }}</td>
+      {% for v in versions %}<td>{{ c.outcomes.get(v | string, "–") | replace("_", " ") }}</td>{% endfor %}</tr>
+    {% else %}
+    <tr><td colspan="{{ 2 + versions | length }}" class="muted">No commands found.</td></tr>
+    {% endfor %}
+  </table></div>
+  <p class="muted">"awaiting input": the command prompted and was cancelled. It is interactive; a scenario is needed to test it further.</p>
+</section>
+
+<section>
+  <h2>Package inventory</h2>
+  <div class="wrap"><table>
+    <tr><th>Component</th><th>Module</th><th>AutoCAD versions</th><th>UI</th><th>Signature</th></tr>
+    {% for c in report.inventory.components %}
+    <tr><td>{{ c.app_name }}</td><td>{{ c.module }}</td><td>{{ c.host_versions | join(", ") }}</td>
+      <td>{{ "GUI required" if c.gui_required else "core console OK" }}</td>
+      <td>{{ c.signature.status if c.signature else "–" }}{% if c.signature and c.signature.signer %}<div class="muted">{{ c.signature.signer }}</div>{% endif %}</td></tr>
+    {% else %}
+    <tr><td colspan="5" class="muted">No components.</td></tr>
+    {% endfor %}
+  </table></div>
+  {% if report.inventory.network %}
+  <h3>Network</h3>
+  <ul>{% for n in report.inventory.network %}<li>{{ n.source }}: {{ n.url or n.domain }}</li>{% endfor %}</ul>
+  {% endif %}
+</section>
+
+{% if screenshots %}
+<section>
+  <h2>Listing screenshots</h2>
+  <div class="shots">{% for name, uri in screenshots %}<figure><img src="{{ uri }}" alt="{{ name }}"><figcaption>{{ name }}</figcaption></figure>{% endfor %}</div>
+</section>
+{% endif %}
+
+{% if sessions %}
+<section>
+  <h2>AutoCAD runs</h2>
+  <div class="wrap"><table>
+    <tr><th>Run</th><th>Kind</th><th>AutoCAD</th><th>Exit</th><th>Duration</th><th>State</th></tr>
+    {% for s in sessions %}
+    <tr><td><a href="{{ s.run_uri }}">{{ s.run_id }}</a></td><td>{{ s.kind }}</td><td>{{ s.year }}</td>
+      <td>{{ s.exit or ("timeout" if s.timed_out else "–") }}</td><td>{{ s.duration_s }} s</td>
+      <td>{{ s.infra_error or ("clean" if s.clean else "events incomplete") }}{% for n in s.notes %}<div class="muted">{{ n }}</div>{% endfor %}</td></tr>
+    {% endfor %}
+  </table></div>
+</section>
+{% endif %}
+<p class="muted">Generated by MTA. Evidence and logs are kept with the job; this page works offline.</p>
+</main>
+<script>
+(function () {
+  var sel = { status: document.getElementById("f-status"), severity: document.getElementById("f-severity"),
+              version: document.getElementById("f-version") };
+  var problems = ["FAIL", "ERROR", "NEEDS_REVIEW", "WARN"];
+  function apply() {
+    document.querySelectorAll(".finding").forEach(function (el) {
+      var s = sel.status.value, ok = true;
+      if (s === "problems") { ok = problems.indexOf(el.dataset.status) >= 0; } else if (s) { ok = el.dataset.status === s; }
+      if (sel.severity.value && el.dataset.severity !== sel.severity.value) { ok = false; }
+      if (sel.version.value && el.dataset.version && el.dataset.version !== sel.version.value) { ok = false; }
+      el.style.display = ok ? "" : "none";
+    });
+  }
+  Object.keys(sel).forEach(function (k) { sel[k].addEventListener("change", apply); });
+})();
+</script>
+</body>
+</html>

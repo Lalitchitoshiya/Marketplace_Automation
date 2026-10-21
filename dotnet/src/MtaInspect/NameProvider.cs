@@ -23,7 +23,8 @@ internal sealed class NameProvider(MetadataReader reader)
     public string GetTypeFromReference(MetadataReader r, TypeReferenceHandle handle, byte rawTypeKind) =>
         Names.Type(r, handle);
 
-    public string GetTypeFromSerializedName(string name) => name.Split(',')[0].Trim();
+    // A System.Type attribute argument can be null (typeof omitted): seen in AutoCAD 2027's AcCoreMgd (step 12).
+    public string GetTypeFromSerializedName(string? name) => name is null ? "<null>" : name.Split(',')[0].Trim();
 
     public PrimitiveTypeCode GetUnderlyingEnumType(string type) => PrimitiveTypeCode.Int32;
 

@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Known-behaviour plugin for the deep doctor check (mta doctor, deep mode) (requirements.md P1-R03), from the P1-T03 spike code.
+       Each command reproduces one ADR-0003 finding so a host update that changes behaviour is noticed. -->
+  <PropertyGroup>
+    <TargetFramework>$(AcadTfm)</TargetFramework>
+    <UsesAutoCAD>true</UsesAutoCAD>
+  </PropertyGroup>
+
+</Project>

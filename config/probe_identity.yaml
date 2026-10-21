@@ -5,7 +5,11 @@
 autocad:
   assembly_name: WorkspaceAssist
   run_dir_env: WSA_SESSION_DIR
+  lisp_function: wsa-note           # (wsa-note "defined" "CMD" (getcname "CMD")) from the script
+  plan_file: session.json           # probe-protocol.md "probe-plan.json"
+  events_file: session.log          # probe-protocol.md "probe-events.ndjson" (NDJSON content)
   commands:
+    load: WSA_LOAD
     enumerate: WSA_ENUMERATE
     mark: WSA_MARK
     assert: WSA_ASSERT

@@ -27,3 +27,6 @@ spikes/*/runs/
 Thumbs.db
 .DS_Store
 .idea/
+
+# Probe identity is generated from the confidential config by `mta probe build`
+dotnet/probes/*/Generated/

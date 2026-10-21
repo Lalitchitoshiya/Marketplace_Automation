@@ -3,7 +3,7 @@
 import re
 from typing import Annotated, Literal
 
-from pydantic import BeforeValidator, Field, field_validator
+from pydantic import BeforeValidator, Field, StringConstraints, field_validator
 
 from mta.models.common import CheckId, HostId, Model, Severity
 
@@ -33,6 +33,8 @@ class CoreConsoleFacts(Model):
     quit_lines: list[str] = Field(min_length=1)
     command_exists_lisp: str
     dotnet_load_command: str
+    crash_reporter: list[str] = Field(default_factory=list)
+    errors_file: str | None = None
 
     @field_validator("command_exists_lisp")
     @classmethod
@@ -133,6 +135,8 @@ class ChecksConfig(Model):
 class CoreConsoleThresholds(Model):
     startup_timeout_s: int = Field(gt=0)
     quit_timeout_s: int = Field(gt=0)
+    crash_exit_grace_s: int = Field(gt=0)
+    max_profile_path: int = Field(gt=0)
 
 
 class LoadThresholds(Model):
@@ -158,6 +162,16 @@ class ExtractThresholds(Model):
     msi_timeout_s: int = Field(gt=0)
 
 
+class ListingThresholds(Model):
+    http_timeout_s: int = Field(gt=0)
+    dns_timeout_s: int = Field(gt=0)
+    max_redirects: int = Field(ge=0)
+
+
+class SigningThresholds(Model):
+    timeout_s: int = Field(gt=0)
+
+
 class KitThresholds(Model):
     doc_max_bytes: int = Field(gt=0)
     screenshot_max_bytes: int = Field(gt=0)
@@ -176,6 +190,8 @@ class Thresholds(Model):
     smoke: SmokeThresholds
     scenario: ScenarioThresholds
     extract: ExtractThresholds
+    listing: ListingThresholds
+    signing: SigningThresholds
     kit: KitThresholds
     doctor: DoctorThresholds
 
@@ -185,23 +201,42 @@ class Thresholds(Model):
 _REVEALING = re.compile(r"mta|probe|test", re.IGNORECASE)
 
 
+# Probe names are written into generated C# source (mta probe build), so they are strictly constrained.
+CommandName = Annotated[str, StringConstraints(pattern=r"^[A-Z][A-Z0-9_]{1,30}$")]
+LispName = Annotated[str, StringConstraints(pattern=r"^[a-z][a-z0-9-]{1,30}$")]
+FileName = Annotated[str, StringConstraints(pattern=r"^[A-Za-z0-9][A-Za-z0-9._-]{0,40}$")]
+DotNetName = Annotated[str, StringConstraints(pattern=r"^[A-Za-z][A-Za-z0-9.]{1,40}$")]
+EnvName = Annotated[str, StringConstraints(pattern=r"^[A-Z][A-Z0-9_]{1,40}$")]
+
+
 class ProbeCommands(Model):
-    enumerate: str
-    mark: str
-    assert_: str = Field(alias="assert")
-    end: str
+    load: CommandName
+    enumerate: CommandName
+    mark: CommandName
+    assert_: CommandName = Field(alias="assert")
+    end: CommandName
 
     def all(self) -> list[str]:
-        return [self.enumerate, self.mark, self.assert_, self.end]
+        return [self.load, self.enumerate, self.mark, self.assert_, self.end]
 
 
 class HostProbeIdentity(Model):
-    assembly_name: str
-    run_dir_env: str
+    assembly_name: DotNetName
+    run_dir_env: EnvName
+    lisp_function: LispName  # receives (getcname "X") results from the script (ADR-0003 F18)
+    plan_file: FileName  # probe-protocol.md names these probe-plan.json / probe-events.ndjson
+    events_file: FileName
     commands: ProbeCommands
 
     def visible_names(self) -> list[str]:
-        return [self.assembly_name, self.run_dir_env, *self.commands.all()]
+        return [
+            self.assembly_name,
+            self.run_dir_env,
+            self.lisp_function,
+            self.plan_file,
+            self.events_file,
+            *self.commands.all(),
+        ]
 
 
 class ProbeIdentity(Model):

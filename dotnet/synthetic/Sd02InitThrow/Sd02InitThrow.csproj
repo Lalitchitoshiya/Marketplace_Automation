@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- SD-02: throws in IExtensionApplication.Initialize, expected LOD-001 (testing-strategy.md). MTA-owned synthetic defect plugin: run only by the corpus. -->
+  <PropertyGroup>
+    <TargetFramework>$(AcadTfm)</TargetFramework>
+    <UsesAutoCAD>true</UsesAutoCAD>
+  </PropertyGroup>
+
+</Project>

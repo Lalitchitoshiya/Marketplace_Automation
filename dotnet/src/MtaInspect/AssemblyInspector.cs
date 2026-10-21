@@ -47,9 +47,9 @@ public static partial class AssemblyInspector
             };
             return pe.HasMetadata ? Describe(report, pe.GetMetadataReader()) : report;
         }
-        catch (Exception e) when (e is BadImageFormatException or IOException or UnauthorizedAccessException
-                                      or InvalidOperationException or ArgumentException)
+        catch (Exception e) when (e is not OutOfMemoryException)
         {
+            // Never let one file (hostile or just unusual) take down the whole inspection.
             return new AssemblyReport { Path = path, Error = $"{e.GetType().Name}: {e.Message}" };
         }
     }
@@ -88,7 +88,7 @@ public static partial class AssemblyInspector
                 var type = Names.AttributeType(r, attribute);
                 if (type is not ("System.Runtime.Versioning.TargetFrameworkAttribute" or CommandClass or ExtensionApplication))
                     continue;
-                var first = attribute.DecodeValue(provider).FixedArguments.FirstOrDefault().Value as string;
+                var first = TryDecode(attribute, provider)?.FixedArguments.FirstOrDefault().Value as string;
                 if (first is null) continue;
                 if (type == CommandClass) commandClasses.Add(first);
                 else if (type == ExtensionApplication) extensionAttributes.Add(first);
@@ -135,7 +135,9 @@ public static partial class AssemblyInspector
             var method = r.GetMethodDefinition((MethodDefinitionHandle)attribute.Parent);
             var type = Names.Type(r, method.GetDeclaringType());
             var methodName = r.GetString(method.Name);
-            var args = attribute.DecodeValue(provider).FixedArguments;
+            var decoded = TryDecode(attribute, provider);
+            if (decoded is null) continue;
+            var args = decoded.Value.FixedArguments;
             // Overloads: (global), (global, flags), (group, global, flags), (group, global, localId, flags, ...).
             // The leading strings name the command; the first Int32 is CommandFlags.
             var strings = args.TakeWhile(a => a.Value is string or null).Select(a => a.Value as string).ToList();
@@ -157,6 +159,20 @@ public static partial class AssemblyInspector
             commands.Add(new CommandInfo(global, local, group, flags, type, methodName, registered));
         }
         return (commands, lisp);
+    }
+
+    /// <summary>One undecodable attribute blob must not lose the rest of the report.</summary>
+    private static CustomAttributeValue<string>? TryDecode(CustomAttribute attribute, NameProvider provider)
+    {
+        try
+        {
+            return attribute.DecodeValue(provider);
+        }
+        catch (Exception e) when (e is BadImageFormatException or ArgumentException or InvalidOperationException
+                                      or NullReferenceException or NotSupportedException)
+        {
+            return null;
+        }
     }
 
     private static List<string> ExtensionAppTypes(MetadataReader r)

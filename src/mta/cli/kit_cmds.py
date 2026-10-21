@@ -1,18 +1,26 @@
-"""`mta kit ...` and `mta run` (so far: intake and package extraction; more analysis in steps 8-15)."""
+"""`mta kit ...`, `mta inspect` (static-only) and `mta run` (static + AutoCAD core-console runs)."""
 
 import os
+import time
 from pathlib import Path
 from typing import Annotated
 
 import typer
 
+from mta.adapters.autocad.dynamic import run_dynamic_stage
 from mta.config import ConfigError, MtaConfig, load_config
 from mta.intake.kit import Scanner, init_kit, validate_kit
 from mta.intake.package import PackageError
 from mta.intake.pipeline import IntakeError, IntakeResult, intake_kit, intake_package
 from mta.intake.prefill import prefill_from_package
+from mta.models import Recommendation
+from mta.report.builder import write_job_report
 from mta.static.malware import scan
-from mta.static.stage import StaticOutcome, run_static_stage
+from mta.static.stage import StaticOutcome, StaticServices, run_static_stage
+
+# requirements.md P1-R24: 0 approve, 10 needs human, 20 reject; 2 usage error, 3 MTA internal error.
+EXIT_CODES = {Recommendation.APPROVE: 0, Recommendation.NEEDS_HUMAN: 10, Recommendation.REJECT: 20}
+EXIT_INTERNAL = 3
 
 kit_app = typer.Typer(help="Create and validate Input Kits.", no_args_is_help=True)
 
@@ -34,9 +42,10 @@ def _config(config_dir: Path | None) -> MtaConfig:
         raise typer.Exit(2) from exc
 
 
-def _scanner(no_scan: bool) -> Scanner | None:
+def _scanner(no_scan: bool, quiet: bool = False) -> Scanner | None:
     if no_scan:
-        typer.echo("WARNING: malware scan skipped (--no-scan)", err=True)
+        if not quiet:
+            typer.echo("WARNING: malware scan skipped (--no-scan)", err=True)
         return None
     return scan
 
@@ -136,28 +145,34 @@ def _print_static(outcome: StaticOutcome) -> None:
         for b in outcome.binary.components:
             ui = "GUI required" if b.gui_required else "core-console OK"
             typer.echo(f"  binary     {b.app_name}: {ui}; commands {', '.join(b.commands) or '-'}")
-    typer.echo("Signing, listing and dynamic checks are added in steps 10-15.")
 
 
-def run(
-    package: Annotated[Path | None, typer.Argument(exists=True, help="MSI, ZIP or .bundle folder.")] = None,
-    kit: Annotated[
-        Path | None, typer.Option("--kit", exists=True, file_okay=False, help="Input Kit folder.")
-    ] = None,
-    no_scan: NoScanOption = False,
-    config_dir: ConfigDirOption = None,
-    data_dir: DataDirOption = None,
+OfflineOption = Annotated[
+    bool, typer.Option("--offline", help="Skip network checks (LST-001/002). Also set by MTA_OFFLINE=1.")
+]
+
+
+def _analyze(
+    package: Path | None,
+    kit: Path | None,
+    no_scan: bool,
+    offline: bool,
+    config_dir: Path | None,
+    data_dir: Path | None,
+    *,
+    dynamic: bool,
 ) -> None:
-    """Test a submission. Give either a package or --kit."""
     if (package is None) == (kit is None):
         typer.echo("error: give either a PACKAGE or --kit (not both)", err=True)
         raise typer.Exit(2)
+    started = time.monotonic()
     cfg = _config(config_dir)
+    data = _data_dir(data_dir)
     try:
         if kit is not None:
-            result = intake_kit(kit, cfg, _data_dir(data_dir), _scanner(no_scan))
+            result = intake_kit(kit, cfg, data, _scanner(no_scan))
         elif package is not None:
-            result = intake_package(package, cfg, _data_dir(data_dir), _scanner(no_scan))
+            result = intake_package(package, cfg, data, _scanner(no_scan))
     except IntakeError as exc:
         for problem in exc.check.problems:
             typer.echo(str(problem), err=True)
@@ -167,4 +182,57 @@ def run(
         typer.echo(f"error: {exc}", err=True)
         raise typer.Exit(2) from exc
     _print_intake(result)
-    _print_static(run_static_stage(result, cfg, _data_dir(data_dir)))
+    services = StaticServices(
+        scanner=_scanner(no_scan, quiet=True), offline=offline or os.environ.get("MTA_OFFLINE") == "1"
+    )
+    outcome = run_static_stage(result, cfg, data, services)
+    _print_static(outcome)
+    gate = "allowed" if outcome.gate.dynamic_allowed else "BLOCKED: " + "; ".join(outcome.gate.reasons)
+    typer.echo(f"dynamic phase: {gate}")
+    dynamic_outcome = None
+    if dynamic:
+        typer.echo("dynamic checks (AutoCAD core console):")
+        dynamic_outcome = run_dynamic_stage(result, outcome, cfg, data)
+        for s in dynamic_outcome.sessions:
+            state = s.infra_error or ("clean" if s.log.clean else "events incomplete")
+            exit_text = s.console.exit_hex if s.console else "-"
+            typer.echo(f"  session    {s.kind} AutoCAD {s.year}: exit {exit_text}, {state} ({s.layout.root})")
+        for r in dynamic_outcome.results:
+            subject = "" if r.target.subject == "package" else f" {r.target.subject}"
+            typer.echo(f"  {r.check_id} {r.status:<12} [{r.target.host_version}]{subject} {r.message}")
+    elapsed = int((time.monotonic() - started) * 1000)
+    report = write_job_report(result, outcome, cfg, elapsed, dynamic_outcome)
+    typer.echo(f"RECOMMENDATION: {report.recommendation}")
+    for reason in report.recommendation_reasons:
+        typer.echo(f"  - {reason}")
+    typer.echo(f"report: {result.job_dir / 'report.html'}")
+    typer.echo(f"        {result.job_dir / 'report.json'}")
+    raise typer.Exit(EXIT_CODES[report.recommendation])
+
+
+def inspect(
+    package: Annotated[Path | None, typer.Argument(exists=True, help="MSI, ZIP or .bundle folder.")] = None,
+    kit: Annotated[
+        Path | None, typer.Option("--kit", exists=True, file_okay=False, help="Input Kit folder.")
+    ] = None,
+    no_scan: NoScanOption = False,
+    offline: OfflineOption = False,
+    config_dir: ConfigDirOption = None,
+    data_dir: DataDirOption = None,
+) -> None:
+    """Static-only analysis: every static check and report.json, without starting AutoCAD (P1-R11)."""
+    _analyze(package, kit, no_scan, offline, config_dir, data_dir, dynamic=False)
+
+
+def run(
+    package: Annotated[Path | None, typer.Argument(exists=True, help="MSI, ZIP or .bundle folder.")] = None,
+    kit: Annotated[
+        Path | None, typer.Option("--kit", exists=True, file_okay=False, help="Input Kit folder.")
+    ] = None,
+    no_scan: NoScanOption = False,
+    offline: OfflineOption = False,
+    config_dir: ConfigDirOption = None,
+    data_dir: DataDirOption = None,
+) -> None:
+    """Test a submission: static checks, then AutoCAD core-console runs. Give a package or --kit."""
+    _analyze(package, kit, no_scan, offline, config_dir, data_dir, dynamic=True)

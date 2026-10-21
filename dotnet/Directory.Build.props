@@ -8,6 +8,10 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Deterministic>true</Deterministic>
     <Version>0.1.0</Version>
+    <!-- Target framework of projects that run inside AutoCAD; per API major (mta probe/corpus build pass it):
+         R25 (2025/2026) = net8.0-windows, R26 (2027) = net10.0-windows. A property, not TargetFramework,
+         because the implicit restore of `dotnet build` ignores a TargetFramework given on the command line. -->
+    <AcadTfm Condition="'$(AcadTfm)' == ''">net8.0-windows</AcadTfm>
   </PropertyGroup>
 
 </Project>

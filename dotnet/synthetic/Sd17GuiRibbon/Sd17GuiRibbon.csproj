@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- SD-17 (testing-strategy.md): builds a ribbon tab in Initialize. Needs the full AutoCAD UI, so headless
+       it must give LOD-001 NEEDS_REVIEW ("requires GUI host"), never FAIL. -->
+  <PropertyGroup>
+    <TargetFramework>$(AcadTfm)</TargetFramework>
+    <UsesAutoCAD>true</UsesAutoCAD>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="AdWindows"><HintPath>$(AcadDir)\AdWindows.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+</Project>

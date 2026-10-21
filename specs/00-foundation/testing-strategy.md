@@ -33,6 +33,7 @@ The corpus has two parts:
 | SD-14 | Leaves files after uninstall | UNI-002 (P2) |
 | SD-15 | Nag dialog at startup | UI-004 (P2) |
 | SD-16 | Command name collides with built-in (`LINE`) | CMD-003 |
+| SD-17 | Builds a ribbon tab in `Initialize` (GUI only) | LOD-001 NEEDS_REVIEW (requires GUI host) |
 
 ## 3. Accuracy metrics
 For each check family and overall, measured on the corpus:

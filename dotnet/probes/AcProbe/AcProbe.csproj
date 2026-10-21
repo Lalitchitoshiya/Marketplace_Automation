@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    The in-host probe for AutoCAD (design.md §5.2). Core-console safe: AcCoreMgd + AcDbMgd only.
+    Build it with `mta probe build`: that generates Generated/Identity.g.cs and sets AssemblyName from the
+    confidential config/probe_identity.yaml, so nothing in the binary reveals the test environment.
+  -->
+  <PropertyGroup>
+    <TargetFramework>$(AcadTfm)</TargetFramework>
+    <UsesAutoCAD>true</UsesAutoCAD>
+    <RootNamespace>Wa</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <!-- Neutral metadata: the default would contain the project name. -->
+    <Product>Workspace tools</Product>
+    <Company>Workspace</Company>
+    <AssemblyTitle>Workspace tools</AssemblyTitle>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <!-- No PDB: its path (…\probes\AcProbe\…) would be embedded in the DLL and reveal the probe. -->
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <Target Name="WaCheckIdentity" BeforeTargets="CoreCompile">
+    <Error Condition="!Exists('$(MSBuildProjectDirectory)\Generated\Identity.g.cs')"
+           Text="Generated\Identity.g.cs is missing: build the probe with `mta probe build` (it reads config/probe_identity.yaml)." />
+  </Target>
+
+</Project>

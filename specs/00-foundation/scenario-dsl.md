@@ -63,3 +63,10 @@ teardown:
 - A scenario that fails because of a missing sample or a host mismatch gives `SKIPPED`, not `FAIL`.
 - Each step emits `scenario.step` events. Assertions emit `assert.result` (see [probe-protocol.md](probe-protocol.md)).
 - Secrets for apps that need sign-in are referenced via `${secret:NAME}` and resolved from the vault. They are never stored in YAML.
+
+## 5. Phase 1 implementation notes (step 14)
+- `open` is supported in `setup` only. The core console has one document, so a mid-scenario `open` makes the scenario SKIPPED until Phase 2.
+- `entity_count.type` is the ObjectARX class name (`AcDbLine`, `AcDbRotatedDimension`, …) or `*`.
+- `inputs: [""]` sends Enter. It is safe while a prompt is active; at `Command:` it would repeat the last command (ADR-0003 F4).
+- `${RUN_DIR}` expands to the run folder in inputs, script lines and file assertions.
+- `mta scenario from-features --kit` writes one draft per kit feature. `mta scenario check` validates files.

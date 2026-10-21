@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- SD-07: references a DLL the package does not ship, expected BIN-004 and LOD-001 (testing-strategy.md). MTA-owned synthetic defect plugin: run only by the corpus. -->
+  <PropertyGroup>
+    <TargetFramework>$(AcadTfm)</TargetFramework>
+    <UsesAutoCAD>true</UsesAutoCAD>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sd07Helper\Sd07Helper.csproj" />
+  </ItemGroup>
+
+</Project>

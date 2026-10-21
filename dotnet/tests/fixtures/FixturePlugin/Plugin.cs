@@ -5,6 +5,7 @@ using Autodesk.AutoCAD.Windows;
 
 [assembly: ExtensionApplication(typeof(Fixture.App))]
 [assembly: CommandClass(typeof(Fixture.Commands))]
+[assembly: Fixture.TypeArg(null)] // a null System.Type argument (seen in AutoCAD 2027's AcCoreMgd)
 
 namespace Fixture;
 
@@ -54,4 +55,10 @@ public class Hidden
 {
     [CommandMethod("FIX_HIDDEN")]
     public void Hide() { }
+}
+
+[AttributeUsage(AttributeTargets.Assembly)]
+public sealed class TypeArgAttribute(Type? type) : Attribute
+{
+    public Type? Type { get; } = type;
 }

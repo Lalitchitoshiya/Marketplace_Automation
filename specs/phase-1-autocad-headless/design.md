@@ -105,7 +105,18 @@ runs/<run_id>/
   dumps/
 ```
 
-### 5.2 AcProbe (`src/probes/AcProbe`, multi-target `net48;net8.0-windows`)
+### 5.2 AcProbe (`dotnet/probes/AcProbe`)
+> **As built (step 11):**
+> - **Target:** `net8.0-windows` only (AutoCAD 2025/2026). A `net48` build for 2024 needs AutoCAD 2024's reference assemblies, which are not installed yet.
+> - **Build:** `mta probe build` generates `Generated/Identity.g.cs` from `probe_identity.yaml` and sets the assembly name. Generated files are gitignored and the build is PDB-free.
+> - **Names:** the command table below uses placeholder names. The real ones come from config. A `load` command was added. ENUMERATE reflects over the loaded plugin assemblies (`command.registered`); whether a command is *defined* comes from `(getcname)` through the probe's LISP function (`command.defined`, F18).
+> - **Verified live** (`tests/test_probe_live.py`, `pytest -m autocad`):
+>   - the probe alone gives a clean stream;
+>   - SD-01: load with timing, enumerate, defined / undefined, prompt → cancel, assert;
+>   - the SpikePlugin exception is recorded with its stack and mark before the `0xC0000005` crash.
+>
+> Original plan: `src/probes/AcProbe`, multi-target `net48;net8.0-windows`.
+
 - References only `AcCoreMgd` and `AcDbMgd` (core-console safe). It implements `IExtensionApplication`.
 - On `Initialize`, it reads `MTA_RUN_DIR`, opens the event writer and hooks:
   - `AppDomain.AssemblyLoad` → `assembly.load`;
@@ -122,6 +133,12 @@ runs/<run_id>/
 | `MTAPROBE_MARK` | `MTAPROBE_MARK <begin|end> <command>`: brackets smoke invocations in the event stream. |
 | `MTAPROBE_ASSERT` | Executes one scenario assertion (entity counts via a model-space iteration in a read transaction, layer/block table lookups, sysvar). |
 | `MTAPROBE_END` | Flushes and emits `probe.shutdown`. |
+
+> **As built (step 12):**
+> - **Modules:** `adapters/autocad/session.py` (layout, `ScriptBuilder`, sessions, baseline), `console.py` (launch, watchdog, crash reporter, dumps), `dynamic.py` (stage), `build.py` (per-major builds), `engine/load_rules.py` (LOD-*), `doctor.py`.
+> - **Loading:** .NET and ARX components load through the probe's `load` command (timing + `loaded` evidence), not plain `NETLOAD`.
+> - **TRUSTEDPATHS** lists every component folder explicitly: the recursive `…/...` form left plugins silently unloaded.
+> - **Crash handling:** crashes are contained as described in ADR-0003 F29/F30.
 
 ### 5.3 ScriptBuilder (generated `.scr`)
 Batch smoke script (conceptual; facts from [ADR-0003](../adr/ADR-0003-accoreconsole-for-phase-1.md) findings F3–F7, F13, F18):

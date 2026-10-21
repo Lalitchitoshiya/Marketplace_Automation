@@ -26,7 +26,7 @@ from mta.static.extract import (
 from mta.static.msi import AdminExtractResult
 from mta.static.results import ResultSink
 from mta.static.stage import run_static_stage
-from tests.conftest import KitFactory, clean_scanner, make_bundle, make_msi, make_zip
+from tests.conftest import OFFLINE_SERVICES, KitFactory, clean_scanner, make_bundle, make_msi, make_zip
 from tests.msi_builder import Action, build_msi
 
 PAYLOAD = {
@@ -332,7 +332,7 @@ def test_package_stage_writes_job_files(
 ) -> None:
     data = tmp_path / "data"
     intake = intake_kit(make_kit(package), cfg, data, clean_scanner)
-    outcome = run_static_stage(intake, cfg, data)
+    outcome = run_static_stage(intake, cfg, data, OFFLINE_SERVICES)
 
     job_dir = intake.job_dir
     assert json.loads((job_dir / "job.json").read_text("utf-8"))["state"] == "STATIC_ANALYSIS"
@@ -356,7 +356,7 @@ def test_package_stage_msi_writes_tables(make_kit: KitFactory, cfg: MtaConfig, t
     build_msi(kit / "package" / "Acme.msi", PAYLOAD, tmp_path / "work")
     data = tmp_path / "data"
     intake = intake_kit(kit, cfg, data, clean_scanner)
-    run_static_stage(intake, cfg, data)
+    run_static_stage(intake, cfg, data, OFFLINE_SERVICES)
     tables = json.loads((intake.job_dir / "msi-tables.json").read_text("utf-8"))
     assert tables["properties"]["ProductName"] == "Acme"
     dll = intake.job_dir / "payload" / "Acme.bundle" / "Contents" / "Acme.dll"

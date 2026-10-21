@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- SD-07 helper: the dependency that the SD-07 package deliberately does not ship. -->
+  <PropertyGroup>
+    <TargetFramework>$(AcadTfm)</TargetFramework>
+  </PropertyGroup>
+
+</Project>

@@ -4,6 +4,8 @@
 coreconsole:
   startup_timeout_s: 90
   quit_timeout_s: 30
+  crash_exit_grace_s: 10       # after the crash reporter appears, the console sometimes never exits (step 12)
+  max_profile_path: 80         # /isolate copies deep roaming folders (e.g. Civil 3D); long roots overflow MAX_PATH (F28)
 
 load:
   per_component_warn_s: 5
@@ -23,6 +25,14 @@ extract:
   max_compression_ratio: 100   # zip bomb guard; real DLL/text entries stay well below 20
   ratio_min_bytes: 1048576     # ratio only checked for entries over 1 MB
   msi_timeout_s: 300           # msiexec /a
+
+listing:                       # LST-001 / LST-002 (requirements.md P1-R09)
+  http_timeout_s: 15
+  dns_timeout_s: 5
+  max_redirects: 5
+
+signing:
+  timeout_s: 300               # one PowerShell Get-AuthenticodeSignature call for all files
 
 kit:                           # submission-inputs.md §2
   doc_max_bytes: 52428800      # 50 MB

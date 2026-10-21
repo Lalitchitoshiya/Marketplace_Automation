@@ -72,11 +72,12 @@ The Submission is built from the **Input Kit** (`submission.yaml` + `package/`, 
 
 ## 5. Recommendation rule (default, configurable in `checks.yaml`)
 ```
-if any(status == ERROR for blocking-path checks)              → NEEDS_HUMAN  (infra issue flagged)
-elif any(status == FAIL and severity == BLOCKER)               → RECOMMEND_REJECT
-elif any(status == FAIL and severity == MAJOR) or any(NEEDS_REVIEW) → NEEDS_HUMAN
-else                                                          → RECOMMEND_APPROVE
+if any(status == FAIL and severity == BLOCKER)                       → RECOMMEND_REJECT
+elif any(status == ERROR)                                            → NEEDS_HUMAN  (infra issue flagged)
+elif any(status == FAIL and severity == MAJOR) or any(NEEDS_REVIEW)  → NEEDS_HUMAN
+else                                                                 → RECOMMEND_APPROVE
 ```
+A BLOCKER FAIL is decided first. It stands on its own evidence (for example, malware found), so an unrelated infrastructure ERROR must not turn a rejection into "needs human" (P1-R08). This order was changed in step 10; before that, ERROR was checked first. Each reason names the check, status, severity and host version, e.g. `SIG-003 FAIL (BLOCKER)`. MINOR/INFO FAILs and WARNs never block approval; they are listed for the reviewer.
 
 ## 6. Override (P2+)
 ```json

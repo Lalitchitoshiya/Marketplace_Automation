@@ -134,9 +134,30 @@ GUI AutoCAD, ribbon/UI, real MSI install and uninstall, VMs, behaviour monitorin
 - THE SYSTEM SHALL verify Authenticode signatures on all PE files and the MSI (SIG-001, SIG-002).
 - THE SYSTEM SHALL scan the extracted payload with Microsoft Defender command-line scanning (SIG-003).
 - IF SIG-003 fails, THEN THE SYSTEM SHALL NOT execute any dynamic phase and SHALL set the recommendation to `RECOMMEND_REJECT`.
+- Signatures are read with PowerShell `Get-AuthenticodeSignature`, one call for all files (`.dll .exe .arx .crx .dbx` in the payload, plus the `.msi` package itself).
+  - SIG-001 FAILs, listing every unsigned file.
+  - SIG-002 FAILs for signed files whose status is not `Valid` (hash mismatch, untrusted chain, revoked, …) or that have no timestamp: without one, the signature stops being valid when the certificate expires.
+  - The signer subjects are listed as evidence.
+- SIG-003 scans the **extracted payload**, not only the archive at intake: MSI cabinets are only visible after extraction.
+  - Clean → PASS. Threats → FAIL, with the threat names. Scanner missing or failed → ERROR.
+- **Dynamic gate.** Dynamic runs are allowed only when SIG-003 is PASS, or SKIPPED by an explicit `--no-scan` for trusted MTA fixtures, and PKG-001 is not FAIL. The decision and its reasons are written to `static-gate.json`.
 
 **P1-R09 Listing checks.**
 - WHEN listing metadata is present, THE SYSTEM SHALL execute LST-001…003. Otherwise THE SYSTEM SHALL mark them `SKIPPED`.
+- LST-001 makes an HTTPS GET of the privacy policy URL. Each redirect is followed by hand (at most `listing.max_redirects`), and each must stay HTTPS.
+  - 2xx → PASS.
+  - An `http://` URL, a redirect to `http://`, a 4xx/5xx status, a name that does not resolve, or a TLS error → FAIL.
+  - 401, 403, 429 or 503 → NEEDS_REVIEW ("check in a browser"). Bot protection sends these to automated clients even when the page works: in the step 10 demo, autodesk.com's privacy page returned 403 from `AkamaiGHost` whatever headers were sent.
+  - A timeout or no network on MTA's side → ERROR.
+- LST-002 checks the email syntax, then the MX records of the domain (dnspython).
+  - MX found → PASS.
+  - Only an A record → WARN (mail falls back to A).
+  - Domain does not exist, or bad syntax → FAIL.
+  - DNS timeout → ERROR.
+- LST-003 needs the declared `products`; without them it is SKIPPED.
+  - FAIL for each declared version that the manifest does not cover, or where a binary fails BIN-001/BIN-002.
+  - Versions the package supports but the listing does not declare are noted (PASS).
+- Requests use a neutral User-Agent (Constitution §11: nothing reveals MTA to the publisher).
 
 **P1-R10 Command collision.**
 - THE SYSTEM SHALL compare discovered command names against the built-in command list for each version (`data/autocad/<year>/commands.txt`) (CMD-003).
@@ -146,6 +167,9 @@ GUI AutoCAD, ribbon/UI, real MSI install and uninstall, VMs, behaviour monitorin
 
 **P1-R11 Static-only mode.**
 - WHEN the user runs `mta inspect <package>`, THE SYSTEM SHALL execute only static checks and produce the same report format.
+- `mta inspect <package>` and `mta inspect --kit <folder>` run intake and every static check, then write `report.json`.
+  - It is validated against `report.schema.json` and carries the recommendation (data-contracts.md §5), a matrix per declared host version, and an inventory (components, commands, network).
+  - The matrix row for a version counts that version's results plus the results that apply to every version.
 
 ### Epic E3 — Headless dynamic execution (AcCoreConsole)
 **P1-R12 Isolated run environment.**
@@ -153,10 +177,29 @@ GUI AutoCAD, ribbon/UI, real MSI install and uninstall, VMs, behaviour monitorin
 
 **P1-R13 Component loading.**
 - THE SYSTEM SHALL load each applicable component with the loader matching its type: .NET via `ExtensionLoader`, ARX via the dynamic linker, LISP via `load`. It SHALL record success or failure, any exception, and the duration (LOD-001, LOD-002).
+- **Which components load in which runs:**
+  - Versions = (declared ∪ component versions) ∩ versions installed on the machine. Versions that are not installed → dynamic checks SKIPPED, with the reason.
+  - Only components whose `RuntimeRequirements` cover the version and that load in plain AutoCAD are loaded.
+  - Loaders by extension: `.dll` → .NET (probe `load` command); `.arx/.crx/.dbx` → ARX (probe `load`); `.lsp/.fas/.vlx` → LISP `(load …)`, bracketed by marks and confirmed by a LISP-function note.
+  - `.cuix/.mnl/.dvb` are not loaded headless (LOD-001 SKIPPED, with a note).
+- **Rules:**
+
+  | Check | Condition | Result |
+  |---|---|---|
+  | LOD-001 | Component loaded, no plugin first-chance exception during the load | PASS |
+  | LOD-001 | Load failed, or a plugin exception during the load (Initialize, F11), or no load-end event | FAIL, with the exception and stack |
+  | LOD-001 | GUI-required component (BIN-008) fails in any of these ways | NEEDS_REVIEW: "requires GUI host — covered in Phase 2" |
+  | LOD-002 | Load duration > `load.per_component_warn_s` | FAIL (MINOR) |
+  | LOD-003 | The host reached `host.ready` and finished every load without a timeout or crash | PASS, otherwise FAIL |
+
+  Results are per component and version (LOD-003: per version).
 - WHEN a GUI-required component fails to load headless with an error caused by a UI-assembly dependency, THE SYSTEM SHALL report LOD-001 as `NEEDS_REVIEW` with the note `requires GUI host — covered in Phase 2`, not `FAIL`.
 
 **P1-R14 Command registration.**
 - After loading, THE SYSTEM SHALL verify that each command discovered statically or declared in the manifest is defined in the host (CMD-001).
+- "Defined" means `(getcname "<name>")` is non-nil after the loads (ADR-0003 F18).
+- Expected commands are the registered `[CommandMethod]` commands plus the manifest's `<Commands>`.
+- Commands of components that failed to load are SKIPPED, not FAIL: LOD-001 already reports that cause.
 
 **P1-R15 Smoke invocation.**
 - THE SYSTEM SHALL invoke each registered command on a blank sample drawing. It SHALL follow each command with the configured cancel lines (AutoLISP `(command)`, which cancels an active prompt; never bare Enter, which repeats commands: ADR-0003 F4/F5) and classify the outcome as one of:
@@ -170,7 +213,29 @@ GUI AutoCAD, ribbon/UI, real MSI install and uninstall, VMs, behaviour monitorin
 - WHEN the outcome is `exception` and the exception is attributed to a plugin assembly, THE SYSTEM SHALL emit CMD-002 `FAIL` (BLOCKER) with the stack trace as evidence.
 - WHEN the outcome is `awaiting_input` (the command prompted for input and was cancelled by the cancel lines), THE SYSTEM SHALL emit CMD-002 `PASS` with the note `interactive; needs scenario coverage`.
 - WHEN the outcome is `timeout` with no prompt active, THE SYSTEM SHALL emit CMD-004 `FAIL`.
-- WHEN running commands in batch mode and an anomaly occurs (crash, timeout), THE SYSTEM SHALL re-run the remaining commands in isolated per-command processes so that one bad command does not hide the others.
+- WHEN running commands in batch mode and an anomaly occurs, THE SYSTEM SHALL re-run the remaining commands in a fresh process, so that one bad command does not hide the others. Anomalies are a crash, a timeout, or a script abort (F22).
+  - Each command runs inside `MARK begin X` … `MARK end X`, followed by the cancel lines.
+  - After an anomaly, the command whose `begin` has no `end` gets its outcome. The commands after it run in a new process, after the same loads.
+- **Per-command watchdog.** A hang is detected when the event file stays silent:
+  - longer than `smoke.per_command_timeout_s` while a smoke mark is open;
+  - longer than `load.per_component_timeout_s` while a load is open.
+- **Outcome table** (all within the command's mark window):
+
+  | Signals | Outcome | Checks |
+  |---|---|---|
+  | `command.ended`, no plugin exception | completed | CMD-002 PASS |
+  | `command.cancelled` after ≥1 prompt | awaiting_input | CMD-002 PASS, "interactive; needs scenario coverage" |
+  | cancelled or failed, no prompt and no exception | cancelled | CMD-002 PASS |
+  | Plugin first-chance exception, then a crash (F8/F30), or `command.failed` | exception | CMD-002 FAIL + RUN-002 FAIL, with the stack |
+  | Plugin first-chance exception, then `command.ended` | completed | PASS, note "exception handled by the plugin" |
+  | Crash without a managed plugin exception (native AV, FailFast) | crash | RUN-001 FAIL |
+  | Silence past the watchdog | timeout | CMD-004 FAIL |
+  | Exit 0 with the mark still open | aborted_script | CMD-002 PASS, note (F22); remaining commands re-run |
+  | `command.unknown` | not_defined | CMD-002 SKIPPED (CMD-001 reports it) |
+
+- RUN-001 FAIL when any session of the version ended in `crash`, or a dump was written.
+- RUN-003 FAIL when a session that reached the end command did not exit with 0 within `coreconsole.quit_timeout_s`; SKIPPED when none reached it.
+- WHEN BIN-001 or BIN-002 FAILs for a version, the dynamic checks of that version are SKIPPED: the binary cannot load there, and LOD-001 would only repeat the cause.
 
 **P1-R16 Runtime health.**
 - THE SYSTEM SHALL detect host crashes using the exit code, a missing `probe.shutdown` event and WER dump presence (RUN-001).
@@ -183,6 +248,9 @@ GUI AutoCAD, ribbon/UI, real MSI install and uninstall, VMs, behaviour monitorin
 **P1-R18 Infrastructure errors.**
 - IF the host fails to start for reasons unrelated to the plugin, THEN THE SYSTEM SHALL mark affected checks `ERROR` and SHALL NOT mark them `FAIL`. Examples: licence error text in the console output, or a baseline run without the plugin also failing.
 - To support this, THE SYSTEM SHALL perform a **baseline launch** (probe only, no plugin) once per version per job.
+- The baseline must give a clean event stream with exit 0. Otherwise every dynamic check of that version is ERROR (`baseline failed`), with the console excerpt.
+- Infrastructure patterns (licence, `/isolate` failure, …) live in `data/autocad/console_errors.yaml`. Matching text in any run → that run's checks are ERROR.
+- **Crash reporter (ADR-0003 F29).** While a run is active the runner kills Autodesk's crash reporter (`senddmp.exe`, `cer_dialog.exe`) when it appears as a descendant of the console process. After exit it also kills any `senddmp.exe` whose command line names the console's PID. This keeps dialogs off the desktop and reduces crash reports about plugins under review; whether the upload is fully prevented is unverified. The isolated test VM (Phase 2) must also block that traffic.
 
 ### Epic E4 — Scenarios
 **P1-R19 Scenario execution.**
@@ -221,7 +289,10 @@ GUI AutoCAD, ribbon/UI, real MSI install and uninstall, VMs, behaviour monitorin
 - WHEN the user runs `mta corpus run`, THE SYSTEM SHALL execute all corpus entries and compare them with `expected.yaml` (manual verdicts / expected checks). It SHALL output recall, false-positive rate, agreement and determinism.
 
 **P1-R26 Synthetic plugins.**
-- THE SYSTEM's repository SHALL contain AutoCAD synthetic defect plugins SD-01…SD-11 and SD-16 ([testing-strategy.md](../00-foundation/testing-strategy.md)), built for net48 and net8.0-windows.
+- THE SYSTEM's repository SHALL contain AutoCAD synthetic defect plugins SD-01…SD-11 and SD-16 ([testing-strategy.md](../00-foundation/testing-strategy.md)). They are built per API major (`mta corpus build`; net48 needs AutoCAD 2024 installed).
+- **M2 measure** (`mta corpus run`): for each SD, the set of checks that are not PASS/SKIPPED, minus the same set for SD-01, must equal the SD's expected checks exactly.
+- **Signing:** SD-01 is signed with a throwaway self-signed certificate created in memory (no certificate store is touched). It is therefore "untrusted" (SIG-002), and SD-10 differs only by being unsigned (SIG-001). A fully green SD-01 needs a trusted test code-signing certificate (open question P1-Q07).
+- SD-11 writes the EICAR test file, which a live Defender quarantines and reports. It runs only with `--with-eicar`, on the test machine.
 
 ## 6. Non-functional requirements
 | ID | Requirement |
@@ -245,3 +316,4 @@ See [roadmap.md](../00-foundation/roadmap.md) E1.1–E1.4.
 | P1-Q04 | Exact `/isolate` and profile switches per version | **Answered** for 2026 (F1) |
 | P1-Q05 | Source for built-in command lists per version | Lookup method **answered**: `getcname` (F18). The command list still needs generating (step 3). |
 | P1-Q06 | Which items of Autodesk's manual checklist are in Phase 1 scope | Workshop P1-T01 |
+| P1-Q07 | A trusted code-signing certificate for MTA's synthetic plugins, so SD-01 can be fully green on SIG-002 | Autodesk / CCTech decision |

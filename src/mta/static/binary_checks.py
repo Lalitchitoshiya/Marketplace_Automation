@@ -21,6 +21,7 @@ from mta.static.results import ResultSink, excerpt
 MANAGED_SUFFIXES = frozenset({".dll", ".exe"})
 ARX_SUFFIXES = frozenset({".arx", ".crx", ".dbx"})
 OBFUSCATED_CONFIDENCE = 0.6
+Inspect = Callable[[list[Path]], list[AssemblyReport]]
 _INSPECTION_CHECKS = ("BIN-001", "BIN-002", "BIN-003", "BIN-004", "BIN-006", "BIN-007", "BIN-008", "BIN-009")
 _TFM = re.compile(r"^\.(NETCoreApp|NETFramework|NETStandard),Version=v(\d+)\.(\d+)", re.IGNORECASE)
 _RUNTIME_FRAMEWORK = re.compile(r"^net(\d)(\d)$")
@@ -511,11 +512,14 @@ def analyze_binaries(
     cfg: MtaConfig,
     *,
     host_id: str = "autocad",
-    inspect: Callable[[list[Path]], list[AssemblyReport]] = inspect_files,
+    inspect: Inspect = inspect_files,
 ) -> BinaryAnalysis:
     analysis = BinaryAnalysis()
     rels = {f: f.relative_to(payload).as_posix() for f in files}
-    managed = [f for f in files if f.suffix.lower() in MANAGED_SUFFIXES]
+    # Shipped copies of host assemblies (BIN-005) are Autodesk's code: analysing them would blame the
+    # publisher for Autodesk's references and API use (found by corpus case SD-08).
+    never_ship = {n.lower() for n in cfg.hosts.hosts[host_id].never_ship_assemblies}
+    managed = [f for f in files if f.suffix.lower() in MANAGED_SUFFIXES and f.name.lower() not in never_ship]
     versions = _target_versions(payload, files, bundle, submission, host_id)
     rules = _Rules(cfg, host_id, analysis, versions)
     rules.bin005(sorted(rels.values()))
